@@ -9,5 +9,6 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         //working1231233
+        //qweqweqweqweqweqwe
     }
 }
