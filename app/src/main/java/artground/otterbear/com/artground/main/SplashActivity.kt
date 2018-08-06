@@ -1,7 +1,8 @@
-package artground.otterbear.com.artground
+package artground.otterbear.com.artground.main
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import artground.otterbear.com.artground.R
 
 class SplashActivity : AppCompatActivity() {
 
