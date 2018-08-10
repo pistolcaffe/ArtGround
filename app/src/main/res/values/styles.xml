@@ -8,4 +8,36 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="DialogTheme" parent="ThemeOverlay.AppCompat.Dialog">
+        <item name="android:windowMinWidthMajor">85%</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowMinWidthMinor">85%</item>
+    </style>
+
+    <style name="DialogTitleTextStyle">
+        <item name="android:textSize">@dimen/dialog_title_textsize</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:fontFamily">@font/namsan_bold</item>
+    </style>
+
+    <style name="DialogSupportingTextStyle">
+        <item name="android:textSize">@dimen/dialog_supporting_textsize</item>
+        <item name="android:textColor">@color/dialog_supporting_text_color</item>
+        <item name="android:fontFamily">@font/namsan_medium</item>
+    </style>
+
+    <style name="DialogButtonStyle">
+        <item name="android:textSize">@dimen/dialog_button_textsize</item>
+        <item name="android:textColor">@android:color/holo_purple</item>
+        <item name="android:fontFamily">@font/namsan_medium</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
 </resources>
