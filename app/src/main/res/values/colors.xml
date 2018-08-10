@@ -5,4 +5,8 @@
 
     <!-- TODO : Accenct 색상 정해야함 -->
     <color name="colorAccent">#FF4081</color>
+
+    <color name="seoul_main_color1">#941e34</color>
+    <color name="seoul_main_color2">#dfdfdd</color>
+    <color name="dialog_supporting_text_color">#424242</color>
 </resources>

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ArtGround</string>
+    <string name="test_dialog_msg">ArtGround 이용을 위해 아래의 권한을 허용해 주세요</string>
+    <string name="permission_usage_info_title">권한 사용안내</string>
 </resources>
