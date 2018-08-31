@@ -1,11 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Dashboard" />
+        android:descendantFocusability="blocksDescendants">
 
-</android.support.constraint.ConstraintLayout>
+        <android.support.constraint.Guideline
+            android:id="@+id/lGl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".05" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/rGl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".95" />
+
+        <TextView
+            android:id="@+id/dashboardTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dashboard_title_top_margin"
+            android:fontFamily="@font/namsan_medium"
+            android:text="@string/dashboard"
+            android:textColor="#616161"
+            android:textSize="@dimen/dashboard_title_textsize"
+            app:layout_constraintLeft_toLeftOf="@id/lGl"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/dashboardSubTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dashboard_subtitle_top_margin"
+            android:fontFamily="@font/namsan_light"
+            android:text="@string/dashboard_sub_title"
+            android:textColor="#616161"
+            android:textSize="@dimen/dashboard_subtitle_textsize"
+            app:layout_constraintLeft_toLeftOf="@id/lGl"
+            app:layout_constraintTop_toBottomOf="@id/dashboardTitle" />
+
+        <artground.otterbear.com.artground.widget.SelectableChip
+            android:id="@+id/categoryFilterChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/dashboardSubTitle"
+            app:layout_constraintRight_toRightOf="@id/rGl"
+            app:layout_constraintTop_toTopOf="@id/dashboardTitle"
+            app:mcv_chipText="@string/filter_favorite_category"
+            app:mcv_selectable="true" />
+
+        <View
+            android:id="@+id/titleLine"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/normal_line_size"
+            android:layout_marginTop="@dimen/dashboard_title_section_line_top_margin"
+            android:background="#e0e0e0"
+            app:layout_constraintLeft_toLeftOf="@id/lGl"
+            app:layout_constraintRight_toRightOf="@id/rGl"
+            app:layout_constraintTop_toBottomOf="@id/dashboardSubTitle" />
+
+        <TextView
+            android:id="@+id/artItemTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dashboard_section_top_margin"
+            android:fontFamily="@font/namsan_bold"
+            android:text="@string/dashboard_playing_artitem_title"
+            android:textColor="#616161"
+            android:textSize="@dimen/dashboard_section_title_textsize"
+            app:layout_constraintLeft_toLeftOf="@id/lGl"
+            app:layout_constraintTop_toBottomOf="@id/titleLine" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/artItemViewPager"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dashboard_artitem_pager_height"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/artItemTitle" />
+
+        <TextView
+            android:id="@+id/expectArtItemTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dashboard_section_top_margin"
+            android:fontFamily="@font/namsan_bold"
+            android:text="@string/dashboard_expect_artitem_title"
+            android:textColor="#616161"
+            android:textSize="@dimen/dashboard_section_title_textsize"
+            app:layout_constraintLeft_toLeftOf="@id/lGl"
+            app:layout_constraintTop_toBottomOf="@id/artItemViewPager" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/expectArtItemViewPager"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dashboard_artitem_pager_height"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/expectArtItemTitle" />
+
+        <TextView
+            android:id="@+id/reviewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dashboard_section_top_margin"
+            android:fontFamily="@font/namsan_bold"
+            android:text="@string/dashboard_review_title"
+            android:textColor="#616161"
+            android:textSize="@dimen/dashboard_section_title_textsize"
+            app:layout_constraintLeft_toLeftOf="@id/lGl"
+            app:layout_constraintTop_toBottomOf="@id/expectArtItemViewPager" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/reviewList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dashboard_review_list_top_margin"
+            android:nestedScrollingEnabled="false"
+            app:layout_constraintLeft_toLeftOf="@id/lGl"
+            app:layout_constraintRight_toRightOf="@id/rGl"
+            app:layout_constraintTop_toBottomOf="@id/reviewTitle" />
+    </android.support.constraint.ConstraintLayout>
+</android.support.v4.widget.NestedScrollView>

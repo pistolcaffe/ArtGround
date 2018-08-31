@@ -1,5 +1,5 @@
 package artground.otterbear.com.artground.main
 
 interface OnNavigationItemClickListener {
-    fun onItemClick(position: Int)
+    fun onItemClick(oldPosition: Int, newPosition: Int)
 }

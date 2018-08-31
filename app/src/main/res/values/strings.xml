@@ -2,4 +2,11 @@
     <string name="app_name">ArtGround</string>
     <string name="test_dialog_msg">ArtGround 이용을 위해 아래의 권한을 허용해 주세요</string>
     <string name="permission_usage_info_title">권한 사용안내</string>
+    <string name="filter_favorite_category">관심 카테고리</string>
+    <string name="filter_all_category">모든 카테고리</string>
+    <string name="dashboard">대시보드</string>
+    <string name="dashboard_sub_title">다양한 문화/예술 정보를 만나보세요</string>
+    <string name="dashboard_playing_artitem_title">진행중인 문화/예술 정보</string>
+    <string name="dashboard_expect_artitem_title">진행예정 문화/예술 정보</string>
+    <string name="dashboard_review_title">후기 리스트</string>
 </resources>
