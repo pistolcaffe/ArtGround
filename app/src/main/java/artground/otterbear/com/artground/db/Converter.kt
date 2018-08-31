@@ -25,7 +25,7 @@ class Converter {
 
         @JvmStatic
         @TypeConverter
-        fun favoriteToIntvalue(favorite: Boolean): Int {
+        fun favoriteToIntValue(favorite: Boolean): Int {
             return if (favorite) 1 else 0
         }
     }

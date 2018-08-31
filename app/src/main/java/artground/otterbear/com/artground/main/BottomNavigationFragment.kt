@@ -82,9 +82,10 @@ class BottomNavigationFragment : Fragment(), View.OnClickListener {
             pastAnimator.start()
             currentAnimator.start()
 
+            val oldPosition = currentItemPosition
             currentItemPosition = itemTag
 
-            (it.context as? OnNavigationItemClickListener)?.onItemClick(currentItemPosition)
+            (it.context as? OnNavigationItemClickListener)?.onItemClick(oldPosition, currentItemPosition)
         }
     }
 
@@ -99,4 +100,5 @@ class BottomNavigationFragment : Fragment(), View.OnClickListener {
     }
 
     private fun isAnimating() = pastAnimator.isRunning || currentAnimator.isRunning
+    fun getCurrentItemPosition() = currentItemPosition
 }

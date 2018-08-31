@@ -9,5 +9,6 @@ data class CategoryItem(
         var _id: Long? = null,
         val name: String,
         val imgResName: String,
-        var favorite: Boolean
+        var favorite: Boolean,
+        var themeColor: String
 )
