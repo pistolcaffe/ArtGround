@@ -9,9 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import artground.otterbear.com.artground.R
-import artground.otterbear.com.artground.common.AppLogger
-import com.bumptech.glide.Glide
+import artground.otterbear.com.artground.common.Values
+import artground.otterbear.com.artground.db.model.DashboardArtItem
 import kotlinx.android.synthetic.main.fragment_dashboard_artitem.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 class DashboardArtItemFragment : Fragment() {
@@ -21,52 +22,33 @@ class DashboardArtItemFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val p = arguments!!.getInt("position")
+        activity?.let { activity ->
+            val artItem = (arguments?.getSerializable(Values.EXTRA_ART_ITEM) as? DashboardArtItem)
+            artItem?.let {
+                var imageInfo = artItem.mainImg
+                imageInfo?.let { info ->
+                    if (info.contains(Values.API_ART_ITEM_IMAGE_URL_PREFIX)) {
+                        imageInfo = StringBuilder(Values.API_ART_ITEM_IMAGE_URL_PREFIX.toLowerCase()).append(info.substring(Values.API_ART_ITEM_IMAGE_URL_PREFIX.length, info.length)).toString()
+                    }
+                }
 
-        //TODO : Test
-        val resIds = arrayOf(R.drawable.category_bg_busking,
-                R.drawable.category_bg_classic,
-                R.drawable.category_bg_concert,
-                R.drawable.category_bg_culture_lecture,
-                R.drawable.category_bg_dance,
-                R.drawable.category_bg_etc,
-                R.drawable.category_bg_exhibition,
-                R.drawable.category_bg_festival,
-                R.drawable.category_bg_gukak,
-                R.drawable.category_bg_movie,
-                R.drawable.category_bg_musical_opera,
-                R.drawable.category_bg_solo,
-                R.drawable.category_bg_theater)
+                GlideApp.with(activity).load(imageInfo).into(artItemImg)
+                artItemTitle.text = artItem.title
 
-        val pos = Random().nextInt(resIds.size)
+                val sdf = SimpleDateFormat("yyyy. MM. dd", Locale.KOREA)
+                artItemDate.text = StringBuilder().apply {
+                    append(sdf.format(artItem.startDate)).append("\t~\t").append(sdf.format(artItem.endDate))
+                }
 
-        Glide.with(this).load(resIds[pos]).into(artItemImg)
-        artItemCategory.apply {
-            val d = (background as LayerDrawable).findDrawableByLayerId(R.id.categoryBackground)
-            AppLogger.LOGE("d: $d")
-            //(d as GradientDrawable).setColor(Color.parseColor("#f57f17"))
-            (d as GradientDrawable).setColor(Color.parseColor(getColorString(p)))
-            //setBackgroundColor(Color.parseColor("#f57f17"))
-            text = "길거리 공연"
-        }
-    }
+                artItemLocation.text = if (artItem.place == null || artItem.place == "()") getString(R.string.no_info) else artItem.place
+                officialDataBadge.visibility = if (artItem.cultCode != null) View.VISIBLE else View.GONE
 
-    //TODO : Test
-    private fun getColorString(position: Int): String {
-        return when (position) {
-            0 -> "#f57f17"
-            1 -> "#1b5e20"
-            2 -> "#006064"
-            3 -> "#004D40"
-            4 -> "#880E4F"
-            5 -> "#4A148C"
-            6 -> "#B71C1C"
-            7 -> "#827717"
-            8 -> "#3E2723"
-            9 -> "#BF360C"
-            10 -> "#263238"
-            11 -> "#0D47A1"
-            else -> "#880e4f"
+                artItemCategory.apply {
+                    val categoryLayer = (background as LayerDrawable).findDrawableByLayerId(R.id.categoryBackground)
+                    (categoryLayer as GradientDrawable).setColor(Color.parseColor("#${artItem.categoryThemeColor}"))
+                    text = artItem.categoryName
+                }
+            }
         }
     }
 }

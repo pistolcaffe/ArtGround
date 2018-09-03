@@ -25,7 +25,7 @@ android {
 dependencies {
     def support_lib_version = "27.1.1"
     def lifecycle_version = "1.1.1"
-    def glide_version = "4.7.1"
+    def glide_version = "4.8.0"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

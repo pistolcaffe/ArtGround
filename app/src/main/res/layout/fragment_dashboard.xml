@@ -14,14 +14,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent=".05" />
+            app:layout_constraintGuide_percent=".03" />
 
         <android.support.constraint.Guideline
             android:id="@+id/rGl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent=".95" />
+            app:layout_constraintGuide_percent=".97" />
 
         <TextView
             android:id="@+id/dashboardTitle"
@@ -79,6 +79,22 @@
             app:layout_constraintLeft_toLeftOf="@id/lGl"
             app:layout_constraintTop_toBottomOf="@id/titleLine" />
 
+        <TextView
+            android:id="@+id/artItemShowAllBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:fontFamily="@font/namsan_medium"
+            android:gravity="center_vertical"
+            android:paddingEnd="@dimen/dashboard_more_view_side_padding"
+            android:paddingStart="@dimen/dashboard_more_view_side_padding"
+            android:text="@string/dashboard_more_view"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/dashboard_more_view_textsize"
+            app:layout_constraintBottom_toBottomOf="@id/artItemTitle"
+            app:layout_constraintRight_toRightOf="@id/rGl"
+            app:layout_constraintTop_toTopOf="@id/artItemTitle" />
+
         <android.support.v4.view.ViewPager
             android:id="@+id/artItemViewPager"
             android:layout_width="0dp"
@@ -99,6 +115,22 @@
             app:layout_constraintLeft_toLeftOf="@id/lGl"
             app:layout_constraintTop_toBottomOf="@id/artItemViewPager" />
 
+        <TextView
+            android:id="@+id/expectArtItemShowAllBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:fontFamily="@font/namsan_medium"
+            android:gravity="center_vertical"
+            android:paddingEnd="@dimen/dashboard_more_view_side_padding"
+            android:paddingStart="@dimen/dashboard_more_view_side_padding"
+            android:text="@string/dashboard_more_view"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/dashboard_more_view_textsize"
+            app:layout_constraintBottom_toBottomOf="@id/expectArtItemTitle"
+            app:layout_constraintRight_toRightOf="@id/rGl"
+            app:layout_constraintTop_toTopOf="@id/expectArtItemTitle" />
+
         <android.support.v4.view.ViewPager
             android:id="@+id/expectArtItemViewPager"
             android:layout_width="0dp"
@@ -118,6 +150,22 @@
             android:textSize="@dimen/dashboard_section_title_textsize"
             app:layout_constraintLeft_toLeftOf="@id/lGl"
             app:layout_constraintTop_toBottomOf="@id/expectArtItemViewPager" />
+
+        <TextView
+            android:id="@+id/reviewShowAllBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:fontFamily="@font/namsan_medium"
+            android:gravity="center_vertical"
+            android:paddingEnd="@dimen/dashboard_more_view_side_padding"
+            android:paddingStart="@dimen/dashboard_more_view_side_padding"
+            android:text="@string/dashboard_more_view"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/dashboard_more_view_textsize"
+            app:layout_constraintBottom_toBottomOf="@id/reviewTitle"
+            app:layout_constraintRight_toRightOf="@id/rGl"
+            app:layout_constraintTop_toTopOf="@id/reviewTitle" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/reviewList"
