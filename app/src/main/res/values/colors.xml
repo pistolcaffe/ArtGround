@@ -9,5 +9,5 @@
     <color name="seoul_main_color1">#941e34</color>
     <color name="seoul_main_color2">#dfdfdd</color>
     <color name="dialog_supporting_text_color">#424242</color>
-    <color name="image_mask_color">#80000000</color>
+    <color name="image_mask_color">#80000000</color> <!-- alpha 60% -->
 </resources>

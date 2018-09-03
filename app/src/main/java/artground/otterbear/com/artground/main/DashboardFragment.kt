@@ -1,5 +1,6 @@
 package artground.otterbear.com.artground.main
 
+import android.arch.lifecycle.ViewModelProviders
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
@@ -14,6 +15,10 @@ import android.view.View
 import android.view.ViewGroup
 import artground.otterbear.com.artground.R
 import artground.otterbear.com.artground.common.AppLogger
+import artground.otterbear.com.artground.common.Values
+import artground.otterbear.com.artground.db.model.DashboardArtItem
+import artground.otterbear.com.artground.db.viewmodel.ArtItemViewModel
+import artground.otterbear.com.artground.db.viewmodel.CategoryViewModel
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.review_list_row.view.*
@@ -35,6 +40,10 @@ class DashboardFragment : Fragment() {
             R.drawable.category_bg_solo,
             R.drawable.category_bg_theater)
 
+    private lateinit var artItemViewModel: ArtItemViewModel
+    private val activeArtItems = mutableListOf<DashboardArtItem>()
+    private val expectArtItems = mutableListOf<DashboardArtItem>()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_dashboard, container, false)
     }
@@ -42,21 +51,40 @@ class DashboardFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         activity?.let {
-            artItemViewPager.apply {
-                clipToPadding = false
-                val padding = it.resources.getDimensionPixelSize(R.dimen.dashboard_artitem_pager_side_padding)
-                setPadding(padding, 0, padding, 0)
-                pageMargin = it.resources.getDimensionPixelSize(R.dimen.dashboard_artitem_page_margin)
-                adapter = DashboardArtItemPageAdapter(childFragmentManager)
-            }
+            artItemViewModel = ViewModelProviders.of(it).get(ArtItemViewModel::class.java)
+            artItemViewModel.getDashboardActiveArtItems().observe(this, android.arch.lifecycle.Observer { r ->
+                r?.let { items ->
+                    activeArtItems.addAll(items)
 
-            expectArtItemViewPager.apply {
-                clipToPadding = false
-                val padding = it.resources.getDimensionPixelSize(R.dimen.dashboard_artitem_pager_side_padding)
-                setPadding(padding, 0, padding, 0)
-                pageMargin = it.resources.getDimensionPixelSize(R.dimen.dashboard_artitem_page_margin)
-                adapter = DashboardArtItemPageAdapter(childFragmentManager)
-            }
+                    artItemViewPager.apply {
+                        clipToPadding = false
+                        offscreenPageLimit = PAGER_OFFSET_LIMIT
+                        val padding = it.resources.getDimensionPixelSize(R.dimen.dashboard_artitem_pager_side_padding)
+                        setPadding(padding, 0, padding, 0)
+                        pageMargin = it.resources.getDimensionPixelSize(R.dimen.dashboard_artitem_page_margin)
+                        adapter = DashboardArtItemPageAdapter(childFragmentManager, activeArtItems)
+                    }
+                }
+            })
+            artItemViewModel.getDashboardExpectArtItems().observe(this, android.arch.lifecycle.Observer { r ->
+                r?.let { items ->
+                    expectArtItems.addAll(items)
+
+                    expectArtItemViewPager.apply {
+                        clipToPadding = false
+                        offscreenPageLimit = PAGER_OFFSET_LIMIT
+                        val padding = it.resources.getDimensionPixelSize(R.dimen.dashboard_artitem_pager_side_padding)
+                        setPadding(padding, 0, padding, 0)
+                        pageMargin = it.resources.getDimensionPixelSize(R.dimen.dashboard_artitem_page_margin)
+                        adapter = DashboardArtItemPageAdapter(childFragmentManager, expectArtItems)
+                    }
+                }
+            })
+
+            val cv = ViewModelProviders.of(it).get(CategoryViewModel::class.java)
+            cv.getFavoriteCategories().observe(this, android.arch.lifecycle.Observer {
+                AppLogger.LOGE("$it")
+            })
 
             reviewList.apply {
                 layoutManager = LinearLayoutManager(it.applicationContext)
@@ -68,19 +96,24 @@ class DashboardFragment : Fragment() {
                 AppLogger.LOGE("s: $selected")
                 categoryFilterChip.chipText = getString(if (selected) R.string.filter_all_category else R.string.filter_favorite_category)
             }
+
+            artItemShowAllBtn.setOnClickListener { }
         }
     }
 
-    inner class DashboardArtItemPageAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
-        override fun getCount(): Int {
-            return 13
-        }
+    companion object {
+        private const val PAGER_OFFSET_LIMIT = 3
 
-        override fun getItem(position: Int): Fragment {
-            return DashboardArtItemFragment().apply {
-                val b = Bundle()
-                b.putInt("position", position)
-                arguments = b
+        class DashboardArtItemPageAdapter(fm: FragmentManager,
+                                          private val dataSet: MutableList<DashboardArtItem>) : FragmentStatePagerAdapter(fm) {
+            override fun getCount(): Int {
+                return dataSet.size
+            }
+
+            override fun getItem(position: Int): Fragment {
+                return DashboardArtItemFragment().apply {
+                    arguments = Bundle().apply { putSerializable(Values.EXTRA_ART_ITEM, dataSet[position]) }
+                }
             }
         }
     }

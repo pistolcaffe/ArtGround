@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportFragmentManager.beginTransaction().add(R.id.container, dashBoardFragment).commit()
+        AppLogger.LOGE("c: ${System.currentTimeMillis()}")
     }
 
     override fun onItemClick(oldPosition: Int, newPosition: Int) {
