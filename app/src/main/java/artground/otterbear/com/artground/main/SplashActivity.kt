@@ -6,6 +6,7 @@ import artground.otterbear.com.artground.R
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import android.widget.ImageView
+import kotlinx.android.synthetic.main.activity_splash.*
 import java.util.*
 
 class SplashActivity : AppCompatActivity() {
@@ -17,17 +18,18 @@ class SplashActivity : AppCompatActivity() {
         val imageView = findViewById<ImageView>(R.id.logo)
         (imageView.getBackground() as AnimationDrawable).start()
 
-        val intent = Intent(this, PreperationActivity::class.java)
-        intent.putExtra("state", "launch")
+        splash_temp_btn1.setOnClickListener {
+            val mainitent = Intent(this, MainActivity::class.java)
+            startActivity(mainitent)
+            finish()
+        }
 
-
-        // delay
-        Timer().schedule(object : TimerTask() {
-            override fun run() {
-                startActivity(intent)
-                finish()
-            }
-        }, 1500)
+        splash_temp_btn2.setOnClickListener {
+            val intent = Intent(this, PreperationActivity::class.java)
+            intent.putExtra("state", "launch")
+            startActivity(intent)
+            finish()
+        }
 
     }
 }
