@@ -4,4 +4,5 @@
     <dimen name="dialog_supporting_textsize">16sp</dimen>
     <dimen name="dialog_button_textsize">14sp</dimen>
     <dimen name="material_dialog_bg_round">8dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

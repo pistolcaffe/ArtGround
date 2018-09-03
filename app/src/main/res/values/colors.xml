@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">#941e34</color>
     <color name="colorPrimaryDark">#60000e</color>
+    <color name="splashColor">#9E2439</color>
 
     <!-- TODO : Accenct 색상 정해야함 -->
     <color name="colorAccent">#FF4081</color>
@@ -9,4 +10,9 @@
     <color name="seoul_main_color1">#941e34</color>
     <color name="seoul_main_color2">#dfdfdd</color>
     <color name="dialog_supporting_text_color">#424242</color>
+
+    <!-- Preperation color-->
+    <color name="preperation_next_btn_color">#ffffff</color>
+
+    <color name="preperation_next_title_font_color">#ffffff</color>
 </resources>

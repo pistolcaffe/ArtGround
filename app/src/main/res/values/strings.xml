@@ -2,4 +2,19 @@
     <string name="app_name">ArtGround</string>
     <string name="test_dialog_msg">ArtGround 이용을 위해 아래의 권한을 허용해 주세요</string>
     <string name="permission_usage_info_title">권한 사용안내</string>
+    <string name="title_activity_preperation">PreperationActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Preperation-->
+    <!-- TODO: 타이틀 및 들어갈 도움말 내용 정해야함. -->
+    <string name="preperation_start">시작하기</string>
+    <string name="preperation_title1">Title1</string>
+    <string name="preperation_description1">Title1</string>
+    <string name="preperation_title2">Title2</string>
+    <string name="preperation_description2">Title2</string>
+    <string name="preperation_title3">Title3</string>
+    <string name="preperation_description3">Title2</string>
+
 </resources>
