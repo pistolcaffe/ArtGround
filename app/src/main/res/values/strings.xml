@@ -1,14 +1,29 @@
 <resources>
     <string name="app_name">ArtGround</string>
-    <string name="test_dialog_msg">ArtGround 이용을 위해 아래의 권한을 허용해 주세요</string>
-    <string name="permission_usage_info_title">권한 사용안내</string>
-    <string name="filter_favorite_category">관심 카테고리</string>
+    <string name="test_dialog_msg">ArtGround �용�해 �래권한�용주세/string>
+    <string name="permission_usage_info_title">권한 �용�내</string>
+    <string name="filter_favorite_category">관카테고리</string>
     <string name="filter_all_category">모든 카테고리</string>
-    <string name="dashboard">대시보드</string>
-    <string name="dashboard_sub_title">다양한 문화/예술 정보를 만나보세요</string>
-    <string name="dashboard_playing_artitem_title">진행중인 문화/예술 정보</string>
-    <string name="dashboard_expect_artitem_title">진행예정 문화/예술 정보</string>
-    <string name="dashboard_review_title">후기 리스트</string>
-    <string name="dashboard_more_view">더보기</string>
-    <string name="no_info">정보없음</string>
+    <string name="dashboard">��보/string>
+    <string name="dashboard_sub_title">�양문화/�술 �보�만나보세/string>
+    <string name="dashboard_playing_artitem_title">진행중인 문화/�술 �보</string>
+    <string name="dashboard_expect_artitem_title">진행�정 문화/�술 �보</string>
+    <string name="dashboard_review_title">�기 리스/string>
+    <string name="dashboard_more_view">�보�/string>
+    <string name="no_info">�보�음</string>
+    <string name="title_activity_preperation">PreperationActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Preperation-->
+    <!-- TODO: ��� 밤어간�맴용 �해�함. -->
+    <string name="preperation_start">�작�기</string>
+    <string name="preperation_title1">Title1</string>
+    <string name="preperation_description1">Title1</string>
+    <string name="preperation_title2">Title2</string>
+    <string name="preperation_description2">Title2</string>
+    <string name="preperation_title3">Title3</string>
+    <string name="preperation_description3">Title2</string>
+
 </resources>
