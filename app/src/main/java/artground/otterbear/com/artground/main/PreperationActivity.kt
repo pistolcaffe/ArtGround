@@ -17,7 +17,6 @@ class PreperationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_preperation)
-        setSupportActionBar(toolbar)
 
         val vp = findViewById(R.id.preperation_vp) as ViewPager
         vp.setAdapter(pagerAdapter(supportFragmentManager))
