@@ -5,17 +5,20 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import artground.otterbear.com.artground.db.model.DashboardArtItem
 import artground.otterbear.com.artground.db.repository.ArtItemRepository
+import artground.otterbear.com.artground.db.repository.DashboardCategoryFilter
 
 class ArtItemViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: ArtItemRepository = ArtItemRepository(application)
-    private val dashboardActiveArtItems: LiveData<MutableList<DashboardArtItem>>
-    private val dashboardExpectArtItems: LiveData<MutableList<DashboardArtItem>>
+    private lateinit var dashboardActiveArtItems: LiveData<MutableList<DashboardArtItem>>
+    private lateinit var dashboardExpectArtItems: LiveData<MutableList<DashboardArtItem>>
 
-    init {
-        dashboardActiveArtItems = repository.getDashboardActiveArtItems()
-        dashboardExpectArtItems = repository.getDashboardExpectArtItems()
+    fun getDashboardActiveArtItems(filter: DashboardCategoryFilter): LiveData<MutableList<DashboardArtItem>> {
+        dashboardActiveArtItems = repository.getDashboardActiveArtItems(filter)
+        return dashboardActiveArtItems
     }
 
-    fun getDashboardActiveArtItems() = dashboardActiveArtItems
-    fun getDashboardExpectArtItems() = dashboardExpectArtItems
+    fun getDashboardExpectArtItems(filter: DashboardCategoryFilter): LiveData<MutableList<DashboardArtItem>> {
+        dashboardExpectArtItems = repository.getDashboardExpectArtItems(filter)
+        return dashboardExpectArtItems
+    }
 }

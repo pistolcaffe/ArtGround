@@ -10,7 +10,7 @@
     <color name="seoul_main_color1">#941e34</color>
     <color name="seoul_main_color2">#dfdfdd</color>
     <color name="dialog_supporting_text_color">#424242</color>
-    <color name="image_mask_color">#80000000</color> <!-- alpha 60% -->
+    <color name="image_mask_color">#80000000</color> <!-- alpha 50% -->
     <!-- Preperation color-->
     <color name="preperation_next_btn_color">#ffffff</color>
 

@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import artground.otterbear.com.artground.R
 import artground.otterbear.com.artground.common.Values
 import artground.otterbear.com.artground.db.model.DashboardArtItem
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import kotlinx.android.synthetic.main.fragment_dashboard_artitem.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -32,8 +33,8 @@ class DashboardArtItemFragment : Fragment() {
                     }
                 }
 
-                GlideApp.with(activity).load(imageInfo).into(artItemImg)
-                artItemTitle.text = artItem.title
+                GlideApp.with(activity).load(imageInfo).transition(withCrossFade()).into(artItemImg)
+                artItemTitle.text = artItem.title.replace("&#39;", "\'")
 
                 val sdf = SimpleDateFormat("yyyy. MM. dd", Locale.KOREA)
                 artItemDate.text = StringBuilder().apply {

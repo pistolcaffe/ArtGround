@@ -22,10 +22,8 @@ class SelectableChip(context: Context, attrs: AttributeSet) : Chip(context, attr
         }
 
         if (::chipTextView.isInitialized && ::selectIcon.isInitialized) {
-            chipTextView.apply {
-                setTextAppearance(R.style.DashboardCategoryOptionTextStyle)
-                setOnClickListener { selectIcon.performClick() }
-            }
+            chipTextView.setTextAppearance(R.style.DashboardCategoryOptionTextStyle)
+            setOnClickListener { selectIcon.performClick() }
         }
     }
 
