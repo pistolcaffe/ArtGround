@@ -10,18 +10,31 @@ import java.util.*
 
 class ArtItemRepository(application: Application) {
     private val artItemDao: ArtItemDao
-    private val dashboardActiveArtItems: LiveData<MutableList<DashboardArtItem>>
-    private val dashboardExpectArtItems: LiveData<MutableList<DashboardArtItem>>
 
     init {
         val db = ArtGroundDatabase.getDatabase(application)
         artItemDao = db.artItemDao()
         val current = Date(System.currentTimeMillis())
         AppLogger.LOGE("current: $current currentMillis: ${current.time}")
-        dashboardActiveArtItems = artItemDao.getActiveArtItems(current, 15)
-        dashboardExpectArtItems = artItemDao.getExpectArtItems(current, 15)
     }
 
-    fun getDashboardActiveArtItems() = dashboardActiveArtItems
-    fun getDashboardExpectArtItems() = dashboardExpectArtItems
+    fun getDashboardActiveArtItems(filter: DashboardCategoryFilter): LiveData<MutableList<DashboardArtItem>> {
+        val current = Date(System.currentTimeMillis())
+        return when (filter) {
+            DashboardCategoryFilter.ALL -> artItemDao.getActiveArtItemsOnAllCategory(current)
+            DashboardCategoryFilter.FAVORITE -> artItemDao.getActiveArtItemsOnFavoriteCategory(current)
+        }
+    }
+
+    fun getDashboardExpectArtItems(filter: DashboardCategoryFilter): LiveData<MutableList<DashboardArtItem>> {
+        val current = Date(System.currentTimeMillis())
+        return when (filter) {
+            DashboardCategoryFilter.ALL -> artItemDao.getExpectArtItemsOnAllCategory(current)
+            DashboardCategoryFilter.FAVORITE -> artItemDao.getExpectArtItemsOnFavoriteCategory(current)
+        }
+    }
+}
+
+enum class DashboardCategoryFilter {
+    FAVORITE, ALL
 }
