@@ -5,14 +5,15 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Query
 import android.arch.persistence.room.Update
 import artground.otterbear.com.artground.db.model.CategoryItem
+import artground.otterbear.com.artground.db.model.StatCategoryItem
 
 @Dao
 interface CategoryItemDao {
     /**
      * 모든 카테고리 불러오기
      */
-    @Query("select * from CategoryItem")
-    fun getAllCategories(): LiveData<MutableList<CategoryItem>>
+    @Query("select category._id, category.name, category.favorite, category.themeColor, category.imgResName, art.itemCount from CategoryItem as category join (select cid, count(*) as itemCount from ArtItem group by cid) as art on category._id = art.cid")
+    fun getAllCategories(): LiveData<MutableList<StatCategoryItem>>
 
     /**
      * 선호 카테고리만 가져오기 (대쉬보드 탭에서 사용)
