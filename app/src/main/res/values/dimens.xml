@@ -42,4 +42,7 @@
     <dimen name="dashboard_more_view_textsize">10sp</dimen>
     <dimen name="dashboard_more_view_side_padding">10dp</dimen>
     <dimen name="dashboard_artitem_subinfo_topbottom_padding">5dp</dimen>
+    <dimen name="category_list_topmargin">10dp</dimen>
+    <dimen name="category_tab_item_textsize">14sp</dimen>
+    <dimen name="category_tab_favorite_info_textsize">10sp</dimen>
 </resources>

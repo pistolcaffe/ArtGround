@@ -46,8 +46,8 @@ class DashboardFragment : Fragment() {
             R.drawable.category_bg_theater)
 
     private val artItemViewModel by lazy { ViewModelProviders.of(this@DashboardFragment).get(ArtItemViewModel::class.java) }
-    private val activeArtItems by lazy { mutableListOf<DashboardArtItem>() }
-    private val expectArtItems by lazy { mutableListOf<DashboardArtItem>() }
+    private val activeArtItems = mutableListOf<DashboardArtItem>()
+    private val expectArtItems = mutableListOf<DashboardArtItem>()
     private val dataLoadCheckBitSet = BitSet(2)
     private var isCategoryRefreshing = false
 

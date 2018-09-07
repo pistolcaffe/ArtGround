@@ -4,6 +4,7 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import artground.otterbear.com.artground.db.model.CategoryItem
+import artground.otterbear.com.artground.db.model.StatCategoryItem
 import artground.otterbear.com.artground.db.repository.CategoryRepository
 
 /**
@@ -11,7 +12,7 @@ import artground.otterbear.com.artground.db.repository.CategoryRepository
  */
 class CategoryViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = CategoryRepository(application)
-    private val allCategories: LiveData<MutableList<CategoryItem>>
+    private val allCategories: LiveData<MutableList<StatCategoryItem>>
     private val favoriteCategories: LiveData<MutableList<CategoryItem>>
 
     init {

@@ -6,10 +6,11 @@ import artground.otterbear.com.artground.db.ArtGroundDatabase
 import artground.otterbear.com.artground.db.Task
 import artground.otterbear.com.artground.db.dao.CategoryItemDao
 import artground.otterbear.com.artground.db.model.CategoryItem
+import artground.otterbear.com.artground.db.model.StatCategoryItem
 
 class CategoryRepository(application: Application) {
     private val categoryItemDao: CategoryItemDao
-    private val allCategories: LiveData<MutableList<CategoryItem>>
+    private val allCategories: LiveData<MutableList<StatCategoryItem>>
     private val favoriteCategories: LiveData<MutableList<CategoryItem>>
 
     init {
