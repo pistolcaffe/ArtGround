@@ -5,14 +5,14 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 
 import artground.otterbear.com.artground.R
-import artground.otterbear.com.artground.main.MainActivity
+import artground.otterbear.com.artground.main.FavoriteCategory
 import kotlinx.android.synthetic.main.fragment_preperation_fragment3.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -41,14 +41,16 @@ class PreperationFragment3 : Fragment()  {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
 
-            preperation_btn1.setOnClickListener {
-
-                val intent = Intent(activity, MainActivity::class.java)
-                startActivity(intent)
-            }
-
         }
     }
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        preperation_btn1.setOnClickListener {
+            val intent = Intent(it.context, FavoriteCategory::class.java)
+            startActivity(intent)
+        }
+    }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

@@ -5,11 +5,12 @@ import android.support.v7.app.AppCompatActivity
 import artground.otterbear.com.artground.R
 import artground.otterbear.com.artground.preperationfragment.PreperationFragment1
 import artground.otterbear.com.artground.preperationfragment.PreperationFragment2
-import kotlinx.android.synthetic.main.activity_preperation.*
 import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.view.ViewPager
-import android.widget.TextView
 import artground.otterbear.com.artground.preperationfragment.PreperationFragment3
+
+
+
 
 
 class PreperationActivity : AppCompatActivity() {
@@ -23,6 +24,7 @@ class PreperationActivity : AppCompatActivity() {
         vp.setCurrentItem(0)
 
     }
+
 
     private class pagerAdapter : FragmentStatePagerAdapter {
         constructor(fm: android.support.v4.app.FragmentManager) : super(fm)
