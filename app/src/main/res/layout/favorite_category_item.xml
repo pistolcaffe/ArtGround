@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/dashboard_item_card_corner_radius"
+    app:cardUseCompatPadding="true">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/fc_img_gl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_percent=".30" />
+
+
+        <ImageView
+            android:id="@+id/fc_item_img"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="H, 2:1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/fc_item_favorite_gl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".06" />
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/image_mask_color"
+            app:layout_constraintBottom_toBottomOf="@id/fc_item_img"
+            app:layout_constraintLeft_toLeftOf="@id/fc_item_img"
+            app:layout_constraintRight_toRightOf="@id/fc_item_img"
+            app:layout_constraintTop_toTopOf="@id/fc_item_img" />
+
+        <FrameLayout
+            android:id="@+id/fc_item_check"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/select_mask_color"
+            app:layout_constraintBottom_toBottomOf="@id/fc_item_img"
+            app:layout_constraintLeft_toLeftOf="@id/fc_item_img"
+            app:layout_constraintRight_toRightOf="@id/fc_item_img"
+            app:layout_constraintTop_toTopOf="@id/fc_item_img" />
+
+        <TextView
+            android:id="@+id/fc_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/namsan_medium"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/category_tab_item_textsize"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"  />
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

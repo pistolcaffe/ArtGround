@@ -30,4 +30,8 @@
     <string name="preperation_title3">Title3</string>
     <string name="preperation_description3">Title2</string>
 
+    <!-- Favorite Category-->
+    <string name="favorite_category_title1">어떤 카테고리에 관심있으신가요?</string>
+    <string name="favorite_category_title2">탭하여 선택하세요.</string>
+
 </resources>
