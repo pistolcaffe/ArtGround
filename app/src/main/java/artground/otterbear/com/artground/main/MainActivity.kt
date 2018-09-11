@@ -5,13 +5,12 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import artground.otterbear.com.artground.R
 import artground.otterbear.com.artground.common.AppLogger
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), OnNavigationItemClickListener {
 
     private val dashBoardFragment by lazy { DashboardFragment() }
-    private val categoryFragment by lazy { CategoryFragment() }
-    private val calendarFragment by lazy { CalendarFragment() }
+    //private val categoryFragment by lazy { CategoryFragment() }
+    private val searchFragment by lazy { SearchFragment() }
     private val userArtItemFragment by lazy { UserArtItemFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,12 +34,10 @@ class MainActivity : AppCompatActivity(), OnNavigationItemClickListener {
         }
     }
 
-    private fun getCurrentFragmentPosition() = (bottomNavigationFragment as BottomNavigationFragment).getCurrentItemPosition()
     private fun getFragmentByPosition(position: Int): Fragment {
         return when (position) {
             0 -> dashBoardFragment
-            1 -> categoryFragment
-            2 -> calendarFragment
+            1 -> searchFragment
             else -> userArtItemFragment
         }
     }
