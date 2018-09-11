@@ -58,8 +58,7 @@ class BottomNavigationFragment : Fragment(), View.OnClickListener {
                 }
 
                 dashboardBtn.setOnClickListener(this)
-                categoryBtn.setOnClickListener(this)
-                calendarBtn.setOnClickListener(this)
+                searchBtn.setOnClickListener(this)
                 userArtItemBtn.setOnClickListener(this)
             }
         }
@@ -92,13 +91,11 @@ class BottomNavigationFragment : Fragment(), View.OnClickListener {
     private fun getIconByPosition(position: Int): ImageView {
         val v = when (position) {
             0 -> dashboardBtn.getChildAt(0)
-            1 -> categoryBtn.getChildAt(0)
-            2 -> calendarBtn.getChildAt(0)
+            1 -> searchBtn.getChildAt(0)
             else -> userArtItemBtn.getChildAt(0)
         }
         return v as ImageView
     }
 
     private fun isAnimating() = pastAnimator.isRunning || currentAnimator.isRunning
-    fun getCurrentItemPosition() = currentItemPosition
 }

@@ -45,6 +45,10 @@
     <dimen name="category_list_topmargin">10dp</dimen>
     <dimen name="category_tab_item_textsize">14sp</dimen>
     <dimen name="category_tab_favorite_info_textsize">10sp</dimen>
+    <dimen name="search_btn_radius">3dp</dimen>
+    <dimen name="category_spinner_item_padding">10dp</dimen>
+    <dimen name="search_form_textsize">12sp</dimen>
+    <dimen name="search_btn_textsize">14sp</dimen>
 
     <!-- favorite Category-->
     <dimen name="favorite_category_top_margin">15dp</dimen>
