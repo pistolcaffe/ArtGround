@@ -18,6 +18,8 @@ class ArtItemRepository(application: Application) {
         AppLogger.LOGE("current: $current currentMillis: ${current.time}")
     }
 
+    fun getAllArtItems() = artItemDao.getAllArtItems()
+
     fun getDashboardActiveArtItems(filter: DashboardCategoryFilter): LiveData<MutableList<DashboardArtItem>> {
         val current = Date(System.currentTimeMillis())
         return when (filter) {
