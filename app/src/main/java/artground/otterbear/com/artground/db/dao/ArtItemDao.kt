@@ -13,8 +13,8 @@ import java.util.*
  */
 @Dao
 interface ArtItemDao {
-    @Query("select * from ArtItem")
-    fun getAllArtItems(): MutableList<ArtItem>
+    @Query("select * from ArtItem limit 20")
+    fun getAllArtItems(): LiveData<MutableList<ArtItem>>
 
     @Query("select * from ArtItem where (startDate between :from and :to) or (endDate >= :from)")
     fun findArtItemBetweenDates(from: Date, to: Date): MutableList<ArtItem>

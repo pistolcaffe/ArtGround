@@ -12,6 +12,8 @@ class ArtItemViewModel(application: Application) : AndroidViewModel(application)
     private lateinit var dashboardActiveArtItems: LiveData<MutableList<DashboardArtItem>>
     private lateinit var dashboardExpectArtItems: LiveData<MutableList<DashboardArtItem>>
 
+    fun getAllArtItems() = repository.getAllArtItems()
+
     fun getDashboardActiveArtItems(filter: DashboardCategoryFilter): LiveData<MutableList<DashboardArtItem>> {
         dashboardActiveArtItems = repository.getDashboardActiveArtItems(filter)
         return dashboardActiveArtItems
