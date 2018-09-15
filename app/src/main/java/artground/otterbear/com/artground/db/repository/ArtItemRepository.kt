@@ -5,7 +5,7 @@ import android.arch.lifecycle.LiveData
 import artground.otterbear.com.artground.common.AppLogger
 import artground.otterbear.com.artground.db.ArtGroundDatabase
 import artground.otterbear.com.artground.db.dao.ArtItemDao
-import artground.otterbear.com.artground.db.model.DashboardArtItem
+import artground.otterbear.com.artground.db.model.SimpleArtItem
 import java.util.*
 
 class ArtItemRepository(application: Application) {
@@ -20,7 +20,7 @@ class ArtItemRepository(application: Application) {
 
     fun getAllArtItems() = artItemDao.getAllArtItems()
 
-    fun getDashboardActiveArtItems(filter: DashboardCategoryFilter): LiveData<MutableList<DashboardArtItem>> {
+    fun getDashboardActiveArtItems(filter: DashboardCategoryFilter): LiveData<MutableList<SimpleArtItem>> {
         val current = Date(System.currentTimeMillis())
         return when (filter) {
             DashboardCategoryFilter.ALL -> artItemDao.getActiveArtItemsOnAllCategory(current)
@@ -28,7 +28,7 @@ class ArtItemRepository(application: Application) {
         }
     }
 
-    fun getDashboardExpectArtItems(filter: DashboardCategoryFilter): LiveData<MutableList<DashboardArtItem>> {
+    fun getDashboardExpectArtItems(filter: DashboardCategoryFilter): LiveData<MutableList<SimpleArtItem>> {
         val current = Date(System.currentTimeMillis())
         return when (filter) {
             DashboardCategoryFilter.ALL -> artItemDao.getExpectArtItemsOnAllCategory(current)

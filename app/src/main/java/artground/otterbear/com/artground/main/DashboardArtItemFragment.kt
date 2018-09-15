@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import artground.otterbear.com.artground.R
 import artground.otterbear.com.artground.common.Values
-import artground.otterbear.com.artground.db.model.DashboardArtItem
+import artground.otterbear.com.artground.db.model.SimpleArtItem
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import kotlinx.android.synthetic.main.fragment_dashboard_artitem.*
 import java.text.SimpleDateFormat
@@ -24,7 +24,7 @@ class DashboardArtItemFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         activity?.let { activity ->
-            val artItem = (arguments?.getSerializable(Values.EXTRA_ART_ITEM) as? DashboardArtItem)
+            val artItem = (arguments?.getSerializable(Values.EXTRA_ART_ITEM) as? SimpleArtItem)
             artItem?.let {
                 var imageInfo = artItem.mainImg
                 imageInfo?.let { info ->
