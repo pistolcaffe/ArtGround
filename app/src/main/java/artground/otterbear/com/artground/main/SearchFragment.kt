@@ -1,5 +1,6 @@
 package artground.otterbear.com.artground.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
@@ -50,6 +51,9 @@ class SearchFragment : Fragment() {
             }
         }
 
+        //TODO : 원복
+        searchBtn.isEnabled = true
+
         startDateBtn.setDateInfoListener {
             AppLogger.LOGE("startDate: $it")
             endDateBtn.getDateInfo()?.run {
@@ -73,6 +77,12 @@ class SearchFragment : Fragment() {
             }
 
             return@setDateInfoListener true
+        }
+
+        searchBtn.setOnClickListener {
+            Intent(it.context, ArtItemListActivity::class.java).run{
+                startActivity(this)
+            }
         }
     }
 

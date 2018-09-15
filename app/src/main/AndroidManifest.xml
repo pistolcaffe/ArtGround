@@ -31,8 +31,11 @@
         <activity
             android:name=".main.FavoriteCategory"
             android:theme="@style/PreperationTheme" />
+        <activity android:name=".main.ArtItemListActivity" />
         <activity
-            android:name=".main.ArtItemListActivity" />
+            android:name=".main.DetailArtItemActivity"
+            android:label=""
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

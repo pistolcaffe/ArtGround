@@ -20,7 +20,7 @@ import android.view.ViewGroup
 import artground.otterbear.com.artground.R
 import artground.otterbear.com.artground.common.AppLogger
 import artground.otterbear.com.artground.common.Values
-import artground.otterbear.com.artground.db.model.DashboardArtItem
+import artground.otterbear.com.artground.db.model.SimpleArtItem
 import artground.otterbear.com.artground.db.repository.DashboardCategoryFilter
 import artground.otterbear.com.artground.db.viewmodel.ArtItemViewModel
 import com.bumptech.glide.Glide
@@ -46,8 +46,8 @@ class DashboardFragment : Fragment() {
             R.drawable.category_bg_theater)
 
     private val artItemViewModel by lazy { ViewModelProviders.of(this@DashboardFragment).get(ArtItemViewModel::class.java) }
-    private val activeArtItems = mutableListOf<DashboardArtItem>()
-    private val expectArtItems = mutableListOf<DashboardArtItem>()
+    private val activeArtItems = mutableListOf<SimpleArtItem>()
+    private val expectArtItems = mutableListOf<SimpleArtItem>()
     private val dataLoadCheckBitSet = BitSet(2)
     private var isCategoryRefreshing = false
 
@@ -128,7 +128,7 @@ class DashboardFragment : Fragment() {
         artItemViewModel.getDashboardExpectArtItems(filter).observe(this, expectArtItemDataObserver)
     }
 
-    private val activeArtItemDataObserver: Observer<MutableList<DashboardArtItem>> = Observer { r ->
+    private val activeArtItemDataObserver: Observer<MutableList<SimpleArtItem>> = Observer { r ->
         r?.let { items ->
             activeArtItems.apply {
                 if (size > 0) clear()
@@ -140,7 +140,7 @@ class DashboardFragment : Fragment() {
         }
     }
 
-    private val expectArtItemDataObserver: Observer<MutableList<DashboardArtItem>> = Observer { r ->
+    private val expectArtItemDataObserver: Observer<MutableList<SimpleArtItem>> = Observer { r ->
         r?.let { items ->
             expectArtItems.apply {
                 if (size > 0) clear()
@@ -156,7 +156,7 @@ class DashboardFragment : Fragment() {
         private const val PAGER_OFFSET_LIMIT = 3
 
         class DashboardArtItemPageAdapter(fm: FragmentManager,
-                                          private val dataSet: MutableList<DashboardArtItem>) : FragmentStatePagerAdapter(fm) {
+                                          private val dataSet: MutableList<SimpleArtItem>) : FragmentStatePagerAdapter(fm) {
 
             override fun getItem(position: Int): Fragment {
                 return DashboardArtItemFragment().apply {

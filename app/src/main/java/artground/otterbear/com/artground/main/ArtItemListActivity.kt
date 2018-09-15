@@ -2,7 +2,12 @@ package artground.otterbear.com.artground.main
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.LayerDrawable
 import android.os.Bundle
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -13,7 +18,7 @@ import android.view.ViewGroup
 import artground.otterbear.com.artground.R
 import artground.otterbear.com.artground.common.AppLogger
 import artground.otterbear.com.artground.common.Values
-import artground.otterbear.com.artground.db.model.ArtItem
+import artground.otterbear.com.artground.db.model.SimpleArtItem
 import artground.otterbear.com.artground.db.viewmodel.ArtItemViewModel
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import kotlinx.android.synthetic.main.activity_art_item_list.*
@@ -24,7 +29,7 @@ import java.util.*
 class ArtItemListActivity : AppCompatActivity() {
 
     private val artItemViewModel by lazy { ViewModelProviders.of(this).get(ArtItemViewModel::class.java) }
-    private val artItemDataSet = mutableListOf<ArtItem>()
+    private val artItemDataSet = mutableListOf<SimpleArtItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +49,7 @@ class ArtItemListActivity : AppCompatActivity() {
         artItemList.apply {
             setHasFixedSize(false)
             layoutManager = LinearLayoutManager(context.applicationContext)
-            adapter = ArtItemListAdapter(artItemDataSet)
+            adapter = ArtItemListAdapter(artItemDataSet).apply { setOnItemClickCallback(artItemClickCallback) }
         }
     }
 
@@ -56,11 +61,23 @@ class ArtItemListActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    private val artItemClickCallback: (Int, ArtItemListAdapter.ItemViewHolder) -> Unit = { position, holder ->
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, holder.itemView.artImg, "sharedTransition")
+        startActivity(Intent(this@ArtItemListActivity, DetailArtItemActivity::class.java).apply {
+            putExtra(Values.EXTRA_ART_ITEM, artItemDataSet[position])
+        }, options.toBundle())
+    }
+
     companion object {
-        class ArtItemListAdapter(private val dataSet: MutableList<ArtItem>) : RecyclerView.Adapter<ArtItemListAdapter.ItemViewHolder>() {
+        class ArtItemListAdapter(private val dataSet: MutableList<SimpleArtItem>) : RecyclerView.Adapter<ArtItemListAdapter.ItemViewHolder>() {
             private val dateFormat = SimpleDateFormat("yyyy. MM. dd", Locale.KOREA)
+            private var itemClickCallback: ((Int, ItemViewHolder) -> Unit)? = null
 
             inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+
+            fun setOnItemClickCallback(callback: (Int, ItemViewHolder) -> Unit) {
+                itemClickCallback = callback
+            }
 
             override fun getItemCount() = dataSet.size
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -90,10 +107,12 @@ class ArtItemListActivity : AppCompatActivity() {
                     AppLogger.LOGE("p: ${artItemName.text} l: ${artItemName.length()}")
 
                     artItemCategory.apply {
-                        //                        val categoryLayer = (background as LayerDrawable).findDrawableByLayerId(R.id.categoryBackground)
-//                        (categoryLayer as GradientDrawable).setColor(Color.parseColor("#${artItem.categoryThemeColor}"))
-                        text = "길거리 공연"
+                        val categoryLayer = (background as LayerDrawable).findDrawableByLayerId(R.id.categoryBackground)
+                        (categoryLayer as GradientDrawable).setColor(Color.parseColor("#${dataSet[position].categoryThemeColor}"))
+                        text = dataSet[position].categoryName
                     }
+
+                    rowParent.setOnClickListener { itemClickCallback?.invoke(position, holder) }
                 }
             }
         }

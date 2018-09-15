@@ -53,6 +53,11 @@
     <dimen name="art_item_name_textsize">16sp</dimen>
     <dimen name="art_item_sub_info_top_margin">5dp</dimen>
     <dimen name="art_item_sub_info_textsize">12sp</dimen>
+    <dimen name="detail_art_item_name_textsize">16sp</dimen>
+    <dimen name="detail_art_item_info_textsize">13sp</dimen>
+    <dimen name="detail_art_item_top_margin">15dp</dimen>
+    <dimen name="detail_art_item_info_left_margin">10dp</dimen>
+    <dimen name="detail_art_item_category_size">12sp</dimen>
 
     <!-- favorite Category-->
     <dimen name="favorite_category_top_margin">15dp</dimen>
