@@ -27,7 +27,7 @@
         android:fontFamily="@font/namsan_medium"
         android:text="후기내용후기내용후기내용후기내용후기내용후기내용후기내용후기내용후기내용후기내용후기내용후기내용후기내용후기내용후기내용후기내용후기내용후기내용후기내용"
         android:textColor="#757575"
-        android:textSize="@dimen/dashboard_review_info_desc_textsize"
+        android:textSize="12dp"
         app:layout_constraintLeft_toLeftOf="@id/lGl"
         app:layout_constraintRight_toRightOf="@id/rGl"
         app:layout_constraintTop_toTopOf="parent" />

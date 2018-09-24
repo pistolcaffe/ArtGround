@@ -58,6 +58,14 @@
     <dimen name="detail_art_item_top_margin">15dp</dimen>
     <dimen name="detail_art_item_info_left_margin">10dp</dimen>
     <dimen name="detail_art_item_category_size">12sp</dimen>
+    <dimen name="form_title_margin">20dp</dimen>
+    <dimen name="form_info_margin">10dp</dimen>
+    <dimen name="form_section_title_textsize">14sp</dimen>
+    <dimen name="form_title_textsize">12sp</dimen>
+    <dimen name="form_info_default_height">48dp</dimen>
+    <dimen name="form_section_gap">8dp</dimen>
+    <dimen name="form_info_left_right_padding">10dp</dimen>
+    <dimen name="form_info_top_bottom_padding">15dp</dimen>
 
     <!-- favorite Category-->
     <dimen name="favorite_category_top_margin">15dp</dimen>
