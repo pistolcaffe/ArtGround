@@ -36,6 +36,11 @@
             android:name=".main.DetailArtItemActivity"
             android:label=""
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".main.AddArtItemActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:label=""
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
