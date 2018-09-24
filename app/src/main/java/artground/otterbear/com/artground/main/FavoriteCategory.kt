@@ -35,6 +35,12 @@ class FavoriteCategory : AppCompatActivity() {
             adapter = FavoriteCategory.Companion.CategoryListAdapter(categoryDataSet)
         }
 
+        val iter : Iterator<StatCategoryItem> = categoryDataSet.iterator()
+
+        var checkedItemCount : Int = 0;
+        fc_count.setText("12개 중 "+checkedItemCount+" 개 선택됨")
+
+
         categoryViewModel.getAllCategories().observe(this, Observer { r ->
             r?.let {
                 categoryDataSet.apply {
@@ -46,12 +52,21 @@ class FavoriteCategory : AppCompatActivity() {
         })
 
         fc_btn.setOnClickListener {
+            saveData()
+            // DATA Set Save
+
             val mainItent = Intent(this, MainActivity::class.java)
             startActivity(mainItent)
             finish()
         }
 
+
     }
+
+    private fun saveData(){
+
+    }
+
     companion object {
         class CategoryListAdapter(private val dataSet: MutableList<StatCategoryItem>) : RecyclerView.Adapter<CategoryListAdapter.FCItemViewHolder>() {
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FCItemViewHolder {
@@ -64,10 +79,19 @@ class FavoriteCategory : AppCompatActivity() {
                 holder.itemView.apply {
                     val data = dataSet[position]
                     fc_item_title.text = context.getString(R.string.category_with_count, data.name, data.itemCount)
-                    //fc_item_check.visibility = if (data.favorite) View.VISIBLE else View.GONE
+                    fc_item_unchecked.visibility = if (data.favorite) View.GONE else View.VISIBLE
+                    fc_item_checked.visibility = if (data.favorite) View.VISIBLE else View.GONE
 
                     val categoryBgRes = context.resources.getIdentifier(data.imgResName, "drawable", context.packageName)
                     GlideApp.with(context).load(categoryBgRes).into(fc_item_img)
+                }
+                holder.itemView.setOnClickListener {
+
+                    dataSet[position].favorite = !dataSet[position].favorite
+                    holder.itemView.apply {
+                        fc_item_unchecked.visibility = if (dataSet[position].favorite) View.GONE else View.VISIBLE
+                        fc_item_checked.visibility = if (dataSet[position].favorite) View.VISIBLE else View.GONE
+                    }
                 }
             }
 
