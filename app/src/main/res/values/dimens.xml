@@ -66,6 +66,7 @@
     <dimen name="form_section_gap">8dp</dimen>
     <dimen name="form_info_left_right_padding">10dp</dimen>
     <dimen name="form_info_top_bottom_padding">15dp</dimen>
+    <dimen name="art_item_option_btn_height">50dp</dimen>
 
     <!-- favorite Category-->
     <dimen name="favorite_category_top_margin">15dp</dimen>

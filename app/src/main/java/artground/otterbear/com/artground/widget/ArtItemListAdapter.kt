@@ -17,14 +17,20 @@ import kotlinx.android.synthetic.main.art_item_row.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ArtItemListAdapter(private val dataSet: MutableList<SimpleArtItem>) : RecyclerView.Adapter<ArtItemListAdapter.ItemViewHolder>() {
+class ArtItemListAdapter(private val dataSet: MutableList<SimpleArtItem>,
+                         private val isEditMode: Boolean = false) : RecyclerView.Adapter<ArtItemListAdapter.ItemViewHolder>() {
     private val dateFormat = SimpleDateFormat("yyyy. MM. dd", Locale.KOREA)
     private var itemClickCallback: ((Int, ItemViewHolder) -> Unit)? = null
+    private var itemOptionClickCallback: ((ArtItemOptions, Int, ItemViewHolder) -> Unit)? = null
 
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     fun setOnItemClickCallback(callback: (Int, ItemViewHolder) -> Unit) {
         itemClickCallback = callback
+    }
+
+    fun setOnItemOptionClickCallback(callback: (ArtItemOptions, Int, ItemViewHolder) -> Unit) {
+        itemOptionClickCallback = callback
     }
 
     override fun getItemCount() = dataSet.size
@@ -50,7 +56,7 @@ class ArtItemListAdapter(private val dataSet: MutableList<SimpleArtItem>) : Recy
 
             val place = dataSet[position].place
 
-            artItemLocation.text = if (place == null || place == "()") context.getString(R.string.no_info) else place.trim()
+            artItemLocation.text = if (place == null || place == "()" || place.isBlank()) context.getString(R.string.no_info) else place.trim()
             officialDataBadge.visibility = if (dataSet[position].cultCode != null) View.VISIBLE else View.GONE
             AppLogger.LOGE("p: ${artItemName.text} l: ${artItemName.length()}")
 
@@ -61,6 +67,21 @@ class ArtItemListAdapter(private val dataSet: MutableList<SimpleArtItem>) : Recy
             }
 
             rowParent.setOnClickListener { itemClickCallback?.invoke(position, holder) }
+
+            if (isEditMode) {
+                editBtn.visibility = View.VISIBLE
+                deleteBtn.visibility = View.VISIBLE
+            } else {
+                editBtn.visibility = View.GONE
+                deleteBtn.visibility = View.GONE
+            }
+
+            editBtn.setOnClickListener { itemOptionClickCallback?.invoke(ArtItemOptions.EDIT, position, holder) }
+            deleteBtn.setOnClickListener { itemOptionClickCallback?.invoke(ArtItemOptions.DELETE, position, holder) }
         }
     }
+}
+
+enum class ArtItemOptions {
+    EDIT, DELETE
 }

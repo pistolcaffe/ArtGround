@@ -4,8 +4,10 @@ import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
+import android.arch.persistence.room.Update
 import artground.otterbear.com.artground.db.model.ArtItem
 import artground.otterbear.com.artground.db.model.SimpleArtItem
+import artground.otterbear.com.artground.db.model.UserArtItem
 import java.util.*
 
 /**
@@ -45,4 +47,16 @@ interface ArtItemDao {
 
     @Query("delete from ArtItem")
     fun deleteAll()
+
+    @Query("delete from ArtItem where _id like :aid")
+    fun delete(aid: Long)
+
+    @Query("select _id, title, startDate, endDate, place, cultCode, orgLink, time, useFee, inquiry, etcDesc, mainImg, name, themeColor from (select _id, cid, title, startDate, endDate, place, cultCode, orgLink, time, useFee, inquiry, etcDesc, mainImg from ArtItem as a where _id in (select b.aid from UserArtItem as b)) as art join (select _id as _cid, name, themeColor from CategoryItem) as category on cid = category._cid")
+    fun getAllUserArtItem(): LiveData<MutableList<SimpleArtItem>>
+
+    @Insert
+    fun insertUserArtItem(item: UserArtItem): Long
+
+    @Update
+    fun update(item: ArtItem): Int
 }

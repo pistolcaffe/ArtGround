@@ -41,7 +41,7 @@ class DashboardArtItemFragment : Fragment() {
                     append(sdf.format(artItem.startDate)).append("\t~\t").append(sdf.format(artItem.endDate))
                 }
 
-                artItemLocation.text = if (artItem.place == null || artItem.place == "()") getString(R.string.no_info) else artItem.place
+                artItemLocation.text = if (artItem.place == null || artItem.place == "()" || artItem.place.isBlank()) getString(R.string.no_info) else artItem.place
                 officialDataBadge.visibility = if (artItem.cultCode != null) View.VISIBLE else View.GONE
 
                 artItemCategory.apply {

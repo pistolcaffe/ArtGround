@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- TODO: only portrait -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="artground.otterbear.com.artground">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -38,9 +40,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".main.AddArtItemActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden"
             android:label=""
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
     </application>
 
 </manifest>

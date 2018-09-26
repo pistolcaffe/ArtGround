@@ -15,6 +15,9 @@ interface CategoryItemDao {
     @Query("select category._id, category.name, category.favorite, category.themeColor, category.imgResName, art.itemCount from CategoryItem as category join (select cid, count(*) as itemCount from ArtItem group by cid) as art on category._id = art.cid")
     fun getAllCategories(): LiveData<MutableList<StatCategoryItem>>
 
+    @Query("select * from CategoryItem")
+    fun getRawAllCategories(): LiveData<MutableList<CategoryItem>>
+
     /**
      * 선호 카테고리만 가져오기 (대쉬보드 탭에서 사용)
      */

@@ -32,6 +32,10 @@ class DatePickerTextView(context: Context, attrs: AttributeSet) : AppCompatTextV
         }
     }
 
+    fun setDateInfo(date: Date) {
+        text = dateFormat.format(date)
+    }
+
     override fun onClick(v: View?) {
         Calendar.getInstance().apply {
             time = generateDate()
