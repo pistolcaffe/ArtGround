@@ -21,6 +21,7 @@ class CategoryRepository(application: Application) {
     }
 
     fun getAllCategories() = allCategories
+    fun getRawAllCategories() = categoryItemDao.getRawAllCategories()
     fun getFavoriteCategories() = favoriteCategories
     fun updateCategories(categories: MutableList<CategoryItem>, callback: ((Void) -> Unit)?) {
         CategoryTask.UpdateAll(categoryItemDao, callback).execute()

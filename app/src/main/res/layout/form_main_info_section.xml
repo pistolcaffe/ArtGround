@@ -46,6 +46,7 @@
 
     <android.support.v7.widget.AppCompatSpinner
         android:id="@+id/categorySpinner"
+        android:clickable="false"
         android:layout_width="0dp"
         android:layout_height="@dimen/form_info_default_height"
         android:layout_marginTop="@dimen/form_info_margin"
@@ -53,6 +54,18 @@
         app:layout_constraintLeft_toLeftOf="@id/lGl"
         app:layout_constraintRight_toRightOf="@id/rGl"
         app:layout_constraintTop_toBottomOf="@id/formCategoryTitle" />
+
+    <ImageView
+        android:id="@+id/spinnerArrowIcon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        android:scaleType="center"
+        android:src="@drawable/ic_keyboard_arrow_down_light_black_18dp"
+        app:layout_constraintBottom_toBottomOf="@id/categorySpinner"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintRight_toRightOf="@id/categorySpinner"
+        app:layout_constraintTop_toTopOf="@id/categorySpinner" />
 
     <TextView
         android:id="@+id/formArtItemNameTitle"
@@ -75,10 +88,11 @@
         android:fontFamily="@font/namsan_light"
         android:gravity="center_vertical"
         android:maxLength="30"
+        android:imeOptions="actionNext"
         android:maxLines="1"
         android:paddingLeft="@dimen/form_info_left_right_padding"
         android:paddingRight="@dimen/form_info_left_right_padding"
-        android:textColor="#757575"
+        android:textColor="#616161"
         android:textSize="@dimen/form_title_textsize"
         app:layout_constraintLeft_toLeftOf="@id/lGl"
         app:layout_constraintRight_toRightOf="@id/rGl"

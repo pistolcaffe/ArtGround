@@ -12,6 +12,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import artground.otterbear.com.artground.R
+import artground.otterbear.com.artground.common.AppLogger
 import artground.otterbear.com.artground.common.Values
 import artground.otterbear.com.artground.db.model.SimpleArtItem
 import kotlinx.android.synthetic.main.activity_detail_art_item.*
@@ -50,23 +51,24 @@ class DetailArtItemActivity : AppCompatActivity() {
             artItemName.text = it.title.replace("&#39;", "\'")
 
             val time = it.time
-            artItemTime.text = if (time == null || time.isEmpty()) getString(R.string.no_info) else time
+            AppLogger.LOGE("time: $time")
+            artItemTime.text = if (time == null || time.isBlank()) getString(R.string.no_info) else time
 
             val place = it.place
-            artItemLocation.text = if (place == null || place == "()") getString(R.string.no_info) else place
+            artItemLocation.text = if (place == null || place == "()" || place.isBlank()) getString(R.string.no_info) else place
 
             val useFee = it.useFee
-            artItemFee.text = if (useFee == null || useFee.isEmpty()) getString(R.string.no_info) else useFee
+            artItemFee.text = if (useFee == null || useFee.isBlank()) getString(R.string.no_info) else useFee
 
             val webPage = it.orgLink
-            artItemWebPage.text = if (webPage == null || webPage.isEmpty()) getString(R.string.no_info) else webPage
+            artItemWebPage.text = if (webPage == null || webPage.isBlank()) getString(R.string.no_info) else webPage
 
             val inquiry = it.inquiry
-            artItemContact.text = if (inquiry == null || inquiry.isEmpty()) getString(R.string.no_info) else inquiry
+            artItemContact.text = if (inquiry == null || inquiry.isBlank()) getString(R.string.no_info) else inquiry
 
             val desc = it.etcDesc
-            descGroup.visibility = if (desc == null || desc.isEmpty()) View.GONE else View.VISIBLE
-            desc?.let { d -> if (!d.isEmpty()) artItemDesc.text = d }
+            descGroup.visibility = if (desc == null || desc.isBlank()) View.GONE else View.VISIBLE
+            desc?.let { d -> if (!d.isBlank()) artItemDesc.text = d }
 
             reviewList.apply {
                 setHasFixedSize(false)

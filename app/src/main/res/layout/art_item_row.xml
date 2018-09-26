@@ -16,8 +16,8 @@
             android:id="@+id/artImg"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:transitionName="sharedTransition"
             android:scaleType="centerCrop"
+            android:transitionName="sharedTransition"
             app:layout_constraintDimensionRatio="1:0.8"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -110,6 +110,95 @@
             android:src="@drawable/ic_bookmark_24dp"
             app:layout_constraintLeft_toLeftOf="@id/artItemContentLeftGl"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/btnLine"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/normal_line_size"
+            android:background="#e0e0e0"
+            app:layout_constraintLeft_toLeftOf="@id/artItemContentLeftGl"
+            app:layout_constraintRight_toRightOf="@id/artItemContentRightGl"
+            app:layout_constraintTop_toBottomOf="@id/artItemLocation" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/editBtn"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/art_item_option_btn_height"
+            android:background="?attr/selectableItemBackground"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintLeft_toLeftOf="@id/artItemContentLeftGl"
+            app:layout_constraintRight_toLeftOf="@+id/deleteBtn"
+            app:layout_constraintTop_toBottomOf="@id/btnLine">
+
+            <ImageView
+                android:id="@+id/editIcon"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="center"
+                android:src="@drawable/ic_edit_gray_18dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintHeight_percent=".80"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/editText"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/editText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/namsan_medium"
+                android:text="@string/edit"
+                android:textColor="#757575"
+                android:textSize="@dimen/detail_art_item_category_size"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/editIcon"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/deleteBtn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="?attr/selectableItemBackground"
+            app:layout_constraintBottom_toBottomOf="@id/editBtn"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintLeft_toRightOf="@id/editBtn"
+            app:layout_constraintRight_toRightOf="@id/artItemContentRightGl"
+            app:layout_constraintTop_toTopOf="@id/editBtn">
+
+            <ImageView
+                android:id="@+id/deleteIcon"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="center"
+                android:src="@drawable/ic_delete_gray_18dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintHeight_percent=".80"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/deleteText"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/deleteText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/namsan_medium"
+                android:text="@string/delete"
+                android:textColor="#757575"
+                android:textSize="@dimen/detail_art_item_category_size"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/deleteIcon"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>
