@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import artground.otterbear.com.artground.R
+import artground.otterbear.com.artground.db.dao.CategoryItemDao
 import artground.otterbear.com.artground.db.model.StatCategoryItem
 import artground.otterbear.com.artground.db.viewmodel.CategoryViewModel
 import kotlinx.android.synthetic.main.activity_favorite_category.*
@@ -53,18 +54,16 @@ class FavoriteCategory : AppCompatActivity() {
 
         fc_btn.setOnClickListener {
             saveData()
-            // DATA Set Save
 
             val mainItent = Intent(this, MainActivity::class.java)
             startActivity(mainItent)
             finish()
         }
-
-
     }
 
     private fun saveData(){
-
+        val prefs = AGPreferences(applicationContext)
+        prefs.text = "USED"
     }
 
     companion object {
