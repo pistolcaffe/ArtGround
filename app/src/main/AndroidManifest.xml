@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- TODO: only portrait -->
+<?xml version="1.0" encoding="utf-8"?><!-- TODO: only portrait -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="artground.otterbear.com.artground">
 
@@ -37,12 +36,17 @@
         <activity
             android:name=".main.DetailArtItemActivity"
             android:label=""
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".main.AddArtItemActivity"
             android:label=""
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".main.ReviewListActivity"
+            android:label="@string/dashboard_review_title"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

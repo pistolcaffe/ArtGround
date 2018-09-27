@@ -1,5 +1,7 @@
 package artground.otterbear.com.artground.main
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -12,10 +14,21 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import artground.otterbear.com.artground.R
 import artground.otterbear.com.artground.common.AppLogger
+import artground.otterbear.com.artground.common.Values
+import artground.otterbear.com.artground.db.model.CategoryItem
+import artground.otterbear.com.artground.db.viewmodel.ArtItemViewModel
+import artground.otterbear.com.artground.db.viewmodel.CategoryViewModel
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.simple_category_list_item.view.*
+import java.io.Serializable
+import java.util.*
 
 class SearchFragment : Fragment() {
+
+    private val categoryViewModel by lazy { ViewModelProviders.of(this).get(CategoryViewModel::class.java) }
+    private val artItemViewModel by lazy { ViewModelProviders.of(this).get(ArtItemViewModel::class.java) }
+    private val categoryItems = mutableListOf<CategoryItem>()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_search, container, false)
     }
@@ -23,25 +36,23 @@ class SearchFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val strings = arrayOf(
-                "모든 카테고리",
-                "콘서트",
-                "뮤지컬/오페라",
-                "연극",
-                "국악",
-                "영화",
-                "기타",
-                "길거리 공연",
-                "무용",
-                "문화교양/강좌",
-                "독주/독창회",
-                "전시회",
-                "축제",
-                "클래식")
-        val adapter = ArrayAdapter<String>(context!!, R.layout.category_spinner_item, 0, strings)
-        adapter.setDropDownViewResource(R.layout.category_spinner_dropdown_item)
-        categorySpinner.adapter = adapter
+        categoryViewModel.getRawAllCategories().observe(this, Observer { r ->
+            r?.let {
+                categoryItems.addAll(it)
+                categoryItems.add(0, createAllCategoryItem())
 
+                val categoryNames = mutableListOf<String>()
+                for (c in categoryItems) {
+                    categoryNames.add(c.name)
+                }
+
+                val adapter = ArrayAdapter<String>(context!!, R.layout.category_spinner_item, 0, categoryNames)
+                adapter.setDropDownViewResource(R.layout.category_spinner_dropdown_item)
+                categorySpinner.adapter = adapter
+            }
+        })
+
+        //TODO: 관심 카테고리 연동 작업
         favoriteCategoryList.apply {
             setHasFixedSize(true)
             layoutManager = GridLayoutManager(context.applicationContext, 3)
@@ -50,9 +61,6 @@ class SearchFragment : Fragment() {
                 AppLogger.stamp()
             }
         }
-
-        //TODO : 원복
-        searchBtn.isEnabled = true
 
         startDateBtn.setDateInfoListener {
             AppLogger.LOGE("startDate: $it")
@@ -80,10 +88,23 @@ class SearchFragment : Fragment() {
         }
 
         searchBtn.setOnClickListener {
-            Intent(it.context, ArtItemListActivity::class.java).run{
-                startActivity(this)
-            }
+            postSearch()
         }
+    }
+
+    private fun postSearch() {
+        context?.let {
+            val params = SearchParams(categoryItems[categorySpinner.selectedItemPosition]._id!!,
+                    startDateBtn.getDateInfo()!!, endDateBtn.getDateInfo()!!)
+
+            startActivity(Intent(it, ArtItemListActivity::class.java).apply {
+                putExtra(Values.EXTRA_SEARCH_PARAMS, params)
+            })
+        }
+    }
+
+    private fun createAllCategoryItem(): CategoryItem {
+        return CategoryItem(_id = 0, name = getString(R.string.all_categories), imgResName = "", favorite = false, themeColor = "")
     }
 
     companion object {
@@ -122,3 +143,5 @@ class SearchFragment : Fragment() {
         }
     }
 }
+
+data class SearchParams(val cid: Long, val start: Date, val end: Date) : Serializable

@@ -36,7 +36,6 @@ import kotlinx.android.synthetic.main.form_main_info_section.*
 import kotlinx.android.synthetic.main.form_main_info_section.view.*
 import kotlinx.android.synthetic.main.form_time_place_info_section.*
 
-//TODO:: next focus (input field)
 class AddArtItemActivity : AppCompatActivity() {
 
     private val categoryViewModel by lazy { ViewModelProviders.of(this).get(CategoryViewModel::class.java) }

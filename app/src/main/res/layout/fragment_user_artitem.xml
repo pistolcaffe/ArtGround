@@ -69,10 +69,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
-                android:paddingBottom="80dp"
+                android:paddingBottom="@dimen/user_art_item_list_bottom_padding"
+                android:visibility="gone"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/titleLine" />
 
         </android.support.constraint.ConstraintLayout>
@@ -93,11 +93,11 @@
         android:id="@+id/userArtItemEmptyText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/art_item_sub_info_top_margin"
         android:fontFamily="@font/namsan_medium"
-        android:text="등록한 문화/예술 정보가 없습니다"
+        android:text="@string/empty_user_art_item"
         android:textColor="#616161"
-        android:textSize="12sp"
+        android:textSize="@dimen/detail_art_item_category_size"
         app:layout_constraintBottom_toTopOf="@+id/emptyArtItemWriteBtn"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -107,7 +107,7 @@
         android:id="@+id/emptyArtItemWriteBtn"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/detail_art_item_info_left_margin"
         android:foreground="?attr/selectableItemBackground"
         app:cardCornerRadius="@dimen/dashboard_item_card_corner_radius"
         app:cardElevation="@dimen/dashboard_item_card_elevation"
@@ -125,9 +125,9 @@
             android:background="#941e34"
             android:fontFamily="@font/namsan_light"
             android:gravity="center"
-            android:text="등록하기"
+            android:text="@string/registration"
             android:textColor="@android:color/white"
-            android:textSize="12sp" />
+            android:textSize="@dimen/detail_art_item_category_size" />
 
     </android.support.v7.widget.CardView>
 
@@ -140,10 +140,10 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/artItemWriteBtn"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginEnd="15dp"
+        android:layout_width="@dimen/add_art_item_fab_size"
+        android:layout_height="@dimen/add_art_item_fab_size"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:layout_marginEnd="@dimen/fab_margin"
         android:src="@drawable/ic_add_white_18dp"
         app:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"

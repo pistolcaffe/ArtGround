@@ -40,6 +40,10 @@ class ArtItemRepository(application: Application) {
         }
     }
 
+    fun findArtItem(cid: Long, start: Date, end: Date) : LiveData<MutableList<SimpleArtItem>>{
+        return artItemDao.findArtItem(cid, start, end)
+    }
+
     fun insertArtItem(artItem: ArtItem, listener: ((Long) -> Unit)? = null) {
         ArtItemTask.Insert(artItemDao, listener).execute(artItem)
     }

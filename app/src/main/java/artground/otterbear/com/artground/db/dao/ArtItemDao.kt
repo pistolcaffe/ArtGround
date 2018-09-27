@@ -18,6 +18,9 @@ interface ArtItemDao {
     @Query("select a._id, a.title, a.startDate, a.endDate, a.place, a.cultCode, a.orgLink, a.time, a.useFee, a.inquiry, a.etcDesc, a.mainImg, b.name, b.themeColor from ArtItem as a join CategoryItem as b on a.cid = b._id limit 40")
     fun getAllArtItems(): LiveData<MutableList<SimpleArtItem>>
 
+    @Query("select a._id, a.title, a.startDate, a.endDate, a.place, a.cultCode, a.orgLink, a.time, a.useFee, a.inquiry, a.etcDesc, a.mainImg, b.name, b.themeColor from ArtItem as a join CategoryItem as b on a.cid = b._id where case when :cid > 0 then a.cid = :cid else a.cid > 0 end and ((a.startDate between :start and :end) or (a.endDate >= :start))")
+    fun findArtItem(cid: Long, start: Date, end: Date): LiveData<MutableList<SimpleArtItem>>
+
     @Query("select * from ArtItem where (startDate between :from and :to) or (endDate >= :from)")
     fun findArtItemBetweenDates(from: Date, to: Date): MutableList<ArtItem>
 

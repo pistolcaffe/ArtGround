@@ -8,7 +8,7 @@
     <string name="dashboard_sub_title">다양한 문화/예술 정보를 확인하세요</string>
     <string name="dashboard_playing_artitem_title">진행중인 문화/예술 정보</string>
     <string name="dashboard_expect_artitem_title">진행예정 문화/예술 정보</string>
-    <string name="dashboard_review_title">후기 리스트</string>
+    <string name="dashboard_review_title">리뷰</string>
     <string name="dashboard_more_view">더보기</string>
     <string name="no_info">정보없음</string>
     <string name="title_activity_preperation">PreperationActivity</string>
@@ -21,7 +21,7 @@
     <string name="start_date_error_msg_1">종료일 이전 일자를 선택하세요</string>
     <string name="end_date_error_msg_1">시작일 이후 일자를 선택하세요</string>
     <string name="search_title">문화/예술 정보 검색</string>
-    <string name="search_sub_title">원하는 정보를 검색해보세요</string>
+    <string name="search_sub_title">원하는 문화/예술 정보를 검색해보세요</string>
     <string name="search">검색</string>
     <string name="my_favorite_category">나의 관심 카테고리</string>
     <string name="user_art_item_title">나의 문화/예술 정보</string>
@@ -52,6 +52,10 @@
     <string name="complete_modify_art_item">수정되었습니다</string>
     <string name="edit">수정하기</string>
     <string name="delete">삭제하기</string>
+    <string name="all_categories">모든 카테고리</string>
+    <string name="empty_user_art_item">등록한 문화/예술 정보가 없습니다</string>
+    <string name="empty_art_item">문화/예술 정보가 없습니다</string>
+    <string name="registration">등록하기</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
