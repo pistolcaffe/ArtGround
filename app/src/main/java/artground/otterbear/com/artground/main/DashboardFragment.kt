@@ -2,9 +2,7 @@ package artground.otterbear.com.artground.main
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.LayerDrawable
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
@@ -13,7 +11,6 @@ import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,27 +20,12 @@ import artground.otterbear.com.artground.common.Values
 import artground.otterbear.com.artground.db.model.SimpleArtItem
 import artground.otterbear.com.artground.db.repository.DashboardCategoryFilter
 import artground.otterbear.com.artground.db.viewmodel.ArtItemViewModel
-import com.bumptech.glide.Glide
+import artground.otterbear.com.artground.widget.ReviewListAdapter
 import kotlinx.android.synthetic.main.fragment_dashboard.*
-import kotlinx.android.synthetic.main.review_list_row.view.*
 import java.util.*
 
 
 class DashboardFragment : Fragment() {
-    //TODO : Test
-    val resIds = arrayOf(R.drawable.category_bg_busking,
-            R.drawable.category_bg_classic,
-            R.drawable.category_bg_concert,
-            R.drawable.category_bg_culture_lecture,
-            R.drawable.category_bg_dance,
-            R.drawable.category_bg_etc,
-            R.drawable.category_bg_exhibition,
-            R.drawable.category_bg_festival,
-            R.drawable.category_bg_gukak,
-            R.drawable.category_bg_movie,
-            R.drawable.category_bg_musical_opera,
-            R.drawable.category_bg_solo,
-            R.drawable.category_bg_theater)
 
     private val artItemViewModel by lazy { ViewModelProviders.of(this@DashboardFragment).get(ArtItemViewModel::class.java) }
     private val activeArtItems = mutableListOf<SimpleArtItem>()
@@ -80,7 +62,7 @@ class DashboardFragment : Fragment() {
             reviewList.apply {
                 layoutManager = LinearLayoutManager(it.applicationContext)
                 setHasFixedSize(true)
-                adapter = ReviewAdapter()
+                adapter = ReviewListAdapter()
             }
 
             categoryFilterChip.setOnSelectClickListener { v, selected ->
@@ -98,6 +80,9 @@ class DashboardFragment : Fragment() {
             }
 
             artItemShowAllBtn.setOnClickListener { }
+            reviewShowAllBtn.setOnClickListener { v ->
+                startActivity(Intent(it, ReviewListActivity::class.java))
+            }
         }
     }
 
@@ -168,38 +153,6 @@ class DashboardFragment : Fragment() {
             override fun getItemPosition(`object`: Any) = PagerAdapter.POSITION_NONE
 
         }
-    }
-
-    inner class ReviewAdapter : RecyclerView.Adapter<ReviewAdapter.ItemHolder>() {
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
-            val itemView = LayoutInflater.from(parent.context).inflate(R.layout.review_list_row, parent, false)
-            return ItemHolder(itemView)
-        }
-
-        override fun getItemCount() = 10
-
-        override fun onBindViewHolder(holder: ItemHolder, position: Int) {
-            holder.itemView.apply {
-                val pos = java.util.Random().nextInt(resIds.size)
-                Glide.with(context).load(resIds[pos]).into(reviewImg)
-
-                artItemCategory.apply {
-                    val d = (background as LayerDrawable).findDrawableByLayerId(R.id.categoryBackground)
-                    AppLogger.LOGE("d: $d")
-                    (d as GradientDrawable).setColor(Color.parseColor("#f57f17"))
-                    text = "문화강좌/교양"
-                }
-
-                reviewDesc.text = if (position % 2 == 0) "정말 재미있어요."
-                else {
-                    "정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요." +
-                            "정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요." +
-                            "정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요."
-                }
-            }
-        }
-
-        inner class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     }
 }
 

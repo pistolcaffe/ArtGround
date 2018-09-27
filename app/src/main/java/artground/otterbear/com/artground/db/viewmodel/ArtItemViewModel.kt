@@ -7,6 +7,7 @@ import artground.otterbear.com.artground.db.model.ArtItem
 import artground.otterbear.com.artground.db.model.SimpleArtItem
 import artground.otterbear.com.artground.db.repository.ArtItemRepository
 import artground.otterbear.com.artground.db.repository.DashboardCategoryFilter
+import java.util.*
 
 class ArtItemViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: ArtItemRepository = ArtItemRepository(application)
@@ -26,11 +27,15 @@ class ArtItemViewModel(application: Application) : AndroidViewModel(application)
         return dashboardExpectArtItems
     }
 
+    fun findArtItem(cid: Long, start: Date, end: Date): LiveData<MutableList<SimpleArtItem>> {
+        return repository.findArtItem(cid, start, end)
+    }
+
     fun insertArtItem(artItem: ArtItem, listener: ((Long) -> Unit)? = null) {
         repository.insertArtItem(artItem, listener)
     }
 
-    fun deleteArtItem(aid: Long){
+    fun deleteArtItem(aid: Long) {
         repository.deleteArtItem(aid)
     }
 

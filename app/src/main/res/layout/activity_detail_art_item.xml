@@ -65,6 +65,7 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/write_review_section_min_height"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <android.support.constraint.ConstraintLayout
@@ -330,4 +331,59 @@
 
         </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@android:color/white">
+
+        <View
+            android:id="@+id/topLine"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/write_review_section_top_line_height"
+            android:background="#e0e0e0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/inputReview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:fontFamily="@font/namsan_medium"
+            android:hint="리뷰를 작성해주세요"
+            android:maxLines="5"
+            android:minHeight="@dimen/write_review_section_min_height"
+            android:padding="@dimen/form_section_gap"
+            android:textColor="#616161"
+            android:textSize="@dimen/form_section_title_textsize"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintWidth_percent=".85" />
+
+        <FrameLayout
+            android:id="@+id/writeBtn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/inputReview"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/topLine">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/write_review_section_min_height"
+                android:layout_gravity="bottom"
+                android:fontFamily="@font/namsan_medium"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:text="게시"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/form_section_title_textsize" />
+
+        </FrameLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
 </android.support.design.widget.CoordinatorLayout>

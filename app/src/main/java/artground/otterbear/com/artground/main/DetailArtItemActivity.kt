@@ -73,7 +73,7 @@ class DetailArtItemActivity : AppCompatActivity() {
             reviewList.apply {
                 setHasFixedSize(false)
                 layoutManager = LinearLayoutManager(context.applicationContext)
-                adapter = ReviewListAdapter()
+                adapter = ArtItemReviewListAdapter()
             }
         }
 
@@ -83,7 +83,7 @@ class DetailArtItemActivity : AppCompatActivity() {
     }
 
     companion object {
-        class ReviewListAdapter : RecyclerView.Adapter<ReviewListAdapter.ItemViewHolder>() {
+        class ArtItemReviewListAdapter : RecyclerView.Adapter<ArtItemReviewListAdapter.ItemViewHolder>() {
             inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
             override fun getItemCount(): Int = 10

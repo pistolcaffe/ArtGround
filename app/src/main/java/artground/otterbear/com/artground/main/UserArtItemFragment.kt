@@ -47,8 +47,8 @@ class UserArtItemFragment : Fragment() {
                     emptySectionGroup.visibility = View.GONE
                     artItemWriteBtn.visibility = View.VISIBLE
                     userArtItemList.visibility = View.VISIBLE
-                    userArtItemList.adapter?.notifyDataSetChanged()
                 }
+                userArtItemList.adapter?.notifyDataSetChanged()
             }
         })
 
