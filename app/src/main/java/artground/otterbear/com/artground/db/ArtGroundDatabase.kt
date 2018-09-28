@@ -8,10 +8,11 @@ import artground.otterbear.com.artground.db.dao.ArtItemDao
 import artground.otterbear.com.artground.db.dao.CategoryItemDao
 import artground.otterbear.com.artground.db.model.ArtItem
 import artground.otterbear.com.artground.db.model.CategoryItem
+import artground.otterbear.com.artground.db.model.ReviewItem
 import artground.otterbear.com.artground.db.model.UserArtItem
 import com.huma.room_for_asset.RoomAsset
 
-@Database(entities = [(ArtItem::class), (CategoryItem::class), (UserArtItem::class)], version = 2)
+@Database(entities = [(ArtItem::class), (CategoryItem::class), (UserArtItem::class), (ReviewItem::class)], version = 2)
 @TypeConverters(value = [Converter::class])
 abstract class ArtGroundDatabase : RoomDatabase() {
     companion object {

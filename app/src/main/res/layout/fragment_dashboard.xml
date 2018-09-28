@@ -162,22 +162,6 @@
             app:layout_constraintLeft_toLeftOf="@id/lGl"
             app:layout_constraintTop_toBottomOf="@id/expectArtItemViewPager" />
 
-        <TextView
-            android:id="@+id/reviewShowAllBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:fontFamily="@font/namsan_medium"
-            android:gravity="center_vertical"
-            android:paddingEnd="@dimen/dashboard_more_view_side_padding"
-            android:paddingStart="@dimen/dashboard_more_view_side_padding"
-            android:text="@string/dashboard_more_view"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/dashboard_more_view_textsize"
-            app:layout_constraintBottom_toBottomOf="@id/reviewTitle"
-            app:layout_constraintRight_toRightOf="@id/rGl"
-            app:layout_constraintTop_toTopOf="@id/reviewTitle" />
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/reviewList"
             android:layout_width="0dp"

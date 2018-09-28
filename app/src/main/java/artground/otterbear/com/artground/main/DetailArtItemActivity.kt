@@ -1,5 +1,8 @@
 package artground.otterbear.com.artground.main
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
@@ -11,15 +14,26 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import artground.otterbear.com.artground.R
 import artground.otterbear.com.artground.common.AppLogger
 import artground.otterbear.com.artground.common.Values
+import artground.otterbear.com.artground.db.model.ReviewItem
 import artground.otterbear.com.artground.db.model.SimpleArtItem
+import artground.otterbear.com.artground.db.model.SimpleReviewItem
+import artground.otterbear.com.artground.db.viewmodel.ArtItemViewModel
 import kotlinx.android.synthetic.main.activity_detail_art_item.*
+import kotlinx.android.synthetic.main.art_item_review_list_row.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 class DetailArtItemActivity : AppCompatActivity() {
+
+    private val artItemViewModel by lazy { ViewModelProviders.of(this).get(ArtItemViewModel::class.java) }
+    private val reviewDataSet = mutableListOf<SimpleReviewItem>()
+    private lateinit var artItem: SimpleArtItem
+    private var isReviewFirstLoad = true
+    private val imm by lazy { getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +41,7 @@ class DetailArtItemActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val artItem = intent.extras.getSerializable(Values.EXTRA_ART_ITEM) as SimpleArtItem
+        artItem = intent.extras.getSerializable(Values.EXTRA_ART_ITEM) as SimpleArtItem
         artItem.let {
             var imageInfo = it.mainImg
             imageInfo?.let { info ->
@@ -73,27 +87,88 @@ class DetailArtItemActivity : AppCompatActivity() {
             reviewList.apply {
                 setHasFixedSize(false)
                 layoutManager = LinearLayoutManager(context.applicationContext)
-                adapter = ArtItemReviewListAdapter()
+                adapter = ArtItemReviewListAdapter(reviewDataSet)
             }
+
+            artItemViewModel.getReviewItemsByArtItemId(it._id).observe(this, Observer { r ->
+                r?.let { items ->
+                    reviewDataSet.apply {
+                        if (isReviewFirstLoad) {
+                            addAll(items)
+
+                            val dummyReviewItemCount = Random().nextInt(5) + 1
+                            for (i in 0 until dummyReviewItemCount) {
+                                reviewDataSet.add(makeDummySimpleReviewItem())
+                            }
+
+                            Collections.sort(this, Comparator<SimpleReviewItem> { o1, o2 -> return@Comparator if (o1.date.time > o2.date.time) -1 else if (o1.date.time == o2.date.time) 0 else 1 })
+                            isReviewFirstLoad = false
+                        } else if (!items.isEmpty()) {
+                            reviewDataSet.add(0, items[0])
+                        }
+                        reviewList.adapter?.notifyDataSetChanged()
+                    }
+                }
+            })
         }
 
         window.apply {
             enterTransition.duration = 200
         }
+
+        writeBtn.setOnClickListener {
+            inputReview.apply {
+                if (!text.isBlank()) {
+                    publishReview()
+                }
+            }
+        }
+    }
+
+    private fun publishReview() {
+        //insert review
+        artItemViewModel.insertReviewItem(
+                ReviewItem(
+                        aid = artItem._id,
+                        desc = inputReview.text.toString(),
+                        date = Date()
+                )
+        )
+        inputReview.setText("")
+        imm.hideSoftInputFromWindow(inputReview.windowToken, 0)
+    }
+
+    private fun makeDummySimpleReviewItem(): SimpleReviewItem {
+        val random = Random()
+        val desc = resources.getStringArray(R.array.dummy_review).run { get(random.nextInt(size)) }
+        val date = generateRandomReviewDate(artItem!!.startDate.time)
+        return SimpleReviewItem(
+                _id = Values.DUMMY_REVIEW_ITEM_ID,
+                desc = desc,
+                date = date)
+    }
+
+    private fun generateRandomReviewDate(from: Long): Date {
+        val to = System.currentTimeMillis()
+        val degree = to - from
+        return Date().apply { time = (from + (Random().nextDouble() * degree)).toLong() }
     }
 
     companion object {
-        class ArtItemReviewListAdapter : RecyclerView.Adapter<ArtItemReviewListAdapter.ItemViewHolder>() {
+        class ArtItemReviewListAdapter(private val reviewDataSet: MutableList<SimpleReviewItem>) : RecyclerView.Adapter<ArtItemReviewListAdapter.ItemViewHolder>() {
+            private val dateFormat = SimpleDateFormat("yyyy. MM. dd hh:mm", Locale.KOREA)
+
             inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-            override fun getItemCount(): Int = 10
+            override fun getItemCount(): Int = reviewDataSet.size
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
                 return ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.art_item_review_list_row, parent, false))
             }
 
             override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
                 holder.itemView.apply {
-
+                    reviewDesc.text = reviewDataSet[position].desc
+                    pubDate.text = dateFormat.format(reviewDataSet[position].date)
                 }
             }
         }

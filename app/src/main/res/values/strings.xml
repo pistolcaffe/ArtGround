@@ -33,6 +33,7 @@
     <string name="form_main_info_title">카테고리 및 제목 (필수)</string>
     <string name="form_time_location_info_title">일정 및 장소 (필수)</string>
     <string name="form_etc_info_title">기타 (선택)</string>
+    <string name="date">일정</string>
     <string name="time">시간</string>
     <string name="location">장소</string>
     <string name="use_fee_title">이용요금</string>
@@ -56,6 +57,17 @@
     <string name="empty_user_art_item">등록한 문화/예술 정보가 없습니다</string>
     <string name="empty_art_item">문화/예술 정보가 없습니다</string>
     <string name="registration">등록하기</string>
+    <string name="input_review_hint">리뷰를 작성해주세요</string>
+    <string name="publish">게시</string>
+
+    <!-- dummy review -->
+    <string-array name="dummy_review">
+        <item>아쉬움이 커요</item>
+        <item>시간이 너무 빨리 지나갔네요 ㅠㅠ</item>
+        <item>강추에요</item>
+        <item>알차고 재미있었어요!</item>
+        <item>좋은 시간이었습니다</item>
+    </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -6,9 +6,7 @@ import artground.otterbear.com.artground.common.AppLogger
 import artground.otterbear.com.artground.db.ArtGroundDatabase
 import artground.otterbear.com.artground.db.Task
 import artground.otterbear.com.artground.db.dao.ArtItemDao
-import artground.otterbear.com.artground.db.model.ArtItem
-import artground.otterbear.com.artground.db.model.SimpleArtItem
-import artground.otterbear.com.artground.db.model.UserArtItem
+import artground.otterbear.com.artground.db.model.*
 import java.util.*
 
 class ArtItemRepository(application: Application) {
@@ -40,8 +38,23 @@ class ArtItemRepository(application: Application) {
         }
     }
 
-    fun findArtItem(cid: Long, start: Date, end: Date) : LiveData<MutableList<SimpleArtItem>>{
+    fun getDashboardReviewItems(filter: DashboardCategoryFilter): LiveData<MutableList<DashboardReviewItem>> {
+        return when (filter) {
+            DashboardCategoryFilter.ALL -> artItemDao.getReviewItemsOnAllCategory()
+            DashboardCategoryFilter.FAVORITE -> artItemDao.getReviewItemsOnFavoriteCategory()
+        }
+    }
+
+    fun getReviewItemsByArtItemId(aid: Long): LiveData<MutableList<SimpleReviewItem>> {
+        return artItemDao.getReviewItemsByArtItemId(aid)
+    }
+
+    fun findArtItem(cid: Long, start: Date, end: Date): LiveData<MutableList<SimpleArtItem>> {
         return artItemDao.findArtItem(cid, start, end)
+    }
+
+    fun insertReviewItem(reviewItem: ReviewItem) {
+        ArtItemTask.InsertReviewItem(artItemDao).execute(reviewItem)
     }
 
     fun insertArtItem(artItem: ArtItem, listener: ((Long) -> Unit)? = null) {
@@ -76,6 +89,13 @@ sealed class ArtItemTask<Params, Result>(val artItemDao: ArtItemDao,
     class Update(dao: ArtItemDao, callback: ((Int) -> Unit)?) : ArtItemTask<ArtItem, Int>(dao, callback) {
         override fun run(params: Array<out ArtItem>): Int {
             return artItemDao.update(params[0])
+        }
+    }
+
+    class InsertReviewItem(dao: ArtItemDao) : ArtItemTask<ReviewItem, Void>(dao, null) {
+        override fun run(params: Array<out ReviewItem>): Void? {
+            artItemDao.insertReviewItem(params[0])
+            return null
         }
     }
 }
