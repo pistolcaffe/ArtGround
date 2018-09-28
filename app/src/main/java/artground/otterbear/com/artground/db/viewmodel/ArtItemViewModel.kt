@@ -15,6 +15,9 @@ class ArtItemViewModel(application: Application) : AndroidViewModel(application)
 
     fun getAllArtItems() = repository.getAllArtItems()
     fun getAllUserArtItems() = repository.getAllUserArtItems()
+    fun getArtItemById(id: Long, listener: ((SimpleArtItem) -> Unit)) {
+        repository.getArtItemById(id, listener)
+    }
 
     fun getDashboardActiveArtItems(filter: DashboardCategoryFilter): LiveData<MutableList<SimpleArtItem>> {
         dashboardActiveArtItems = repository.getDashboardActiveArtItems(filter)
@@ -28,6 +31,14 @@ class ArtItemViewModel(application: Application) : AndroidViewModel(application)
 
     fun getDashboardReviewItems(filter: DashboardCategoryFilter): LiveData<MutableList<DashboardReviewItem>> {
         return repository.getDashboardReviewItems(filter)
+    }
+
+    fun getActiveArtItems(filter: DashboardCategoryFilter): LiveData<MutableList<SimpleArtItem>> {
+        return repository.getActiveArtItems(filter)
+    }
+
+    fun getExpectArtItems(filter: DashboardCategoryFilter): LiveData<MutableList<SimpleArtItem>> {
+        return repository.getExpectArtItems(filter)
     }
 
     fun getReviewItemsByArtItemId(aid: Long): LiveData<MutableList<SimpleReviewItem>> {
