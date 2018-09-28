@@ -16,6 +16,7 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/dashboard_review_item_height"
             android:scaleType="centerCrop"
+            android:transitionName="sharedTransition"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1.1:1"
             app:layout_constraintLeft_toLeftOf="parent"

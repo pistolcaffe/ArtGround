@@ -2,8 +2,11 @@ package artground.otterbear.com.artground.main
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
@@ -18,10 +21,12 @@ import artground.otterbear.com.artground.common.AppLogger
 import artground.otterbear.com.artground.common.Values
 import artground.otterbear.com.artground.db.model.DashboardReviewItem
 import artground.otterbear.com.artground.db.model.SimpleArtItem
+import artground.otterbear.com.artground.db.repository.DashboardArtItemType
 import artground.otterbear.com.artground.db.repository.DashboardCategoryFilter
 import artground.otterbear.com.artground.db.viewmodel.ArtItemViewModel
 import artground.otterbear.com.artground.widget.ReviewListAdapter
 import kotlinx.android.synthetic.main.fragment_dashboard.*
+import kotlinx.android.synthetic.main.review_list_row.view.*
 import java.util.*
 import kotlin.Comparator
 
@@ -32,7 +37,7 @@ class DashboardFragment : Fragment() {
     private val activeArtItems = mutableListOf<SimpleArtItem>()
     private val expectArtItems = mutableListOf<SimpleArtItem>()
     private val dataLoadCheckBitSet = BitSet(2)
-    private var isCategoryRefreshing = false
+    private var isCategoryRefreshing = true
     private val reviewDataSet = mutableListOf<DashboardReviewItem>()
 
     private val pagerInitOperator: ViewPager.() -> Unit = {
@@ -56,7 +61,7 @@ class DashboardFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        activity?.let {
+        activity?.let { it ->
             artItemViewPager.run(pagerInitOperator)
             expectArtItemViewPager.run(pagerInitOperator)
             bindArtItems()
@@ -64,13 +69,20 @@ class DashboardFragment : Fragment() {
             reviewList.apply {
                 layoutManager = LinearLayoutManager(it.applicationContext)
                 setHasFixedSize(true)
-                adapter = ReviewListAdapter(reviewDataSet)
+                adapter = ReviewListAdapter(reviewDataSet).apply {
+                    setOnItemClickListener { pos, holder -> onReviewItemClick(pos, holder) }
+                }
             }
 
             categoryFilterChip.setOnSelectClickListener { v, selected ->
                 AppLogger.LOGE("s: $selected")
                 if (isCategoryRefreshing) return@setOnSelectClickListener
 
+                isCategoryRefreshing = true
+
+                expectArtItemShowAllBtn.visibility = View.INVISIBLE
+                expectArtItemViewPager.visibility = View.INVISIBLE
+                emptyExpectArtItem.visibility = View.INVISIBLE
                 contentGroup.visibility = View.GONE
                 dashboardLoadingView.visibility = View.VISIBLE
 
@@ -81,7 +93,14 @@ class DashboardFragment : Fragment() {
                 bindArtItems()
             }
 
-            artItemShowAllBtn.setOnClickListener { }
+            artItemShowAllBtn.setOnClickListener { startActivity(generateArtItemShowAllIntent(it.context, DashboardArtItemType.ACTIVE)) }
+            expectArtItemShowAllBtn.setOnClickListener { startActivity(generateArtItemShowAllIntent(it.context, DashboardArtItemType.EXPECTED)) }
+        }
+    }
+
+    private fun generateArtItemShowAllIntent(context: Context, itemType: DashboardArtItemType): Intent {
+        return Intent(context, ArtItemListActivity::class.java).apply {
+            putExtra(Values.EXTRA_ART_ITEM_LIST_OP_TYPE, OpType(itemType, getCurrentCategoryFilter()))
         }
     }
 
@@ -97,6 +116,13 @@ class DashboardFragment : Fragment() {
                 dataLoadCheckBitSet.clear()
                 contentGroup.visibility = View.VISIBLE
                 dashboardLoadingView.visibility = View.INVISIBLE
+
+                AppLogger.LOGE("empty: ${expectArtItems.isEmpty()}")
+                emptyExpectArtItem.visibility = if (expectArtItems.isEmpty()) View.VISIBLE else View.INVISIBLE
+                expectArtItemViewPager.visibility = if (expectArtItems.isEmpty()) View.INVISIBLE else View.VISIBLE
+                expectArtItemShowAllBtn.visibility = if (expectArtItems.isEmpty()) View.INVISIBLE else View.VISIBLE
+
+                isCategoryRefreshing = false
             }, 500)
         }
         AppLogger.LOGE("okay: $okay")
@@ -110,36 +136,6 @@ class DashboardFragment : Fragment() {
         val filter = getCurrentCategoryFilter()
         artItemViewModel.getDashboardActiveArtItems(filter).observe(this, activeArtItemDataObserver)
         artItemViewModel.getDashboardExpectArtItems(filter).observe(this, expectArtItemDataObserver)
-    }
-
-    /**
-     * 1. LiveData 로 review Item 을 가져옴
-     * 2. 총 20개를 채워야 하는데, 모자란 부분을 더미데이터로 생성
-     * 3. 진행중인 데이터에서 랜덤으로 뽑아온뒤 array 에 있는 더미데이터를 가지고 reviewItem 를 생성한다
-     * 4. 이때 날짜를 해당 공연 날짜 startDate ~ 현재 날짜에서 랜덤으로 뽑기
-     * 5. 총 list 에서 날짜 순으로 정렬 한뒤 리스트를 갱신한다.
-     */
-
-    private val reviewItemDataObserver: Observer<MutableList<DashboardReviewItem>> = Observer { r ->
-        r?.let {
-            AppLogger.LOGE("size: ${it.size}\n$it")
-            reviewDataSet.apply {
-                if (!isEmpty()) clear()
-                addAll(it)
-
-                val remainDataSize = REVIEW_ITEM_LIMIT - size
-                for (i in 0 until remainDataSize) {
-                    add(makeDummyReviewItem())
-                }
-
-                this.sortWith(Comparator { o1, o2 ->
-                    return@Comparator if (o1.date.time > o2.date.time) -1 else if (o1.date.time == o2.date.time) 0 else 1
-                })
-            }
-            reviewList.adapter?.notifyDataSetChanged()
-            dataLoadCheckBitSet.set(DashboardSubject.ACTIVE_ART_ITEM.index)
-            checkLoadCompleteDashboardData()
-        }
     }
 
     private fun makeDummyReviewItem(): DashboardReviewItem {
@@ -167,6 +163,42 @@ class DashboardFragment : Fragment() {
         return Date().apply { time = (from + (Random().nextDouble() * degree)).toLong() }
     }
 
+    private fun onReviewItemClick(position: Int, holder: ReviewListAdapter.ItemHolder) {
+        activity?.let {
+            artItemViewModel.getArtItemById(reviewDataSet[position].aid) { item ->
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(it, holder.itemView.reviewImg, "sharedTransition")
+                startActivity(Intent(it, DetailArtItemActivity::class.java).apply {
+                    putExtra(Values.EXTRA_ART_ITEM, item)
+                }, options.toBundle())
+            }
+        }
+    }
+
+    private val reviewItemDataObserver: Observer<MutableList<DashboardReviewItem>> = Observer { r ->
+        r?.let {
+            AppLogger.LOGE("size: ${it.size}\n$it")
+            reviewDataSet.apply {
+                if (!isEmpty()) clear()
+                addAll(it)
+
+                val remainDataSize = REVIEW_ITEM_LIMIT - size
+                for (i in 0 until remainDataSize) {
+                    add(makeDummyReviewItem())
+                }
+
+                this.sortWith(Comparator { o1, o2 ->
+                    return@Comparator if (o1.date.time > o2.date.time) -1 else if (o1.date.time == o2.date.time) 0 else 1
+                })
+            }
+            reviewList.adapter?.notifyDataSetChanged()
+
+            if (isCategoryRefreshing) {
+                dataLoadCheckBitSet.set(DashboardSubject.ACTIVE_ART_ITEM.index)
+                checkLoadCompleteDashboardData()
+            }
+        }
+    }
+
     private val activeArtItemDataObserver: Observer<MutableList<SimpleArtItem>> = Observer { r ->
         r?.let { items ->
             activeArtItems.apply {
@@ -185,8 +217,15 @@ class DashboardFragment : Fragment() {
                 addAll(items)
             }
             expectArtItemViewPager.adapter?.notifyDataSetChanged()
-            dataLoadCheckBitSet.set(DashboardSubject.EXPECT_ART_ITEM.index)
-            checkLoadCompleteDashboardData()
+
+            if (isCategoryRefreshing) {
+                dataLoadCheckBitSet.set(DashboardSubject.EXPECT_ART_ITEM.index)
+                checkLoadCompleteDashboardData()
+            } else {
+                emptyExpectArtItem.visibility = if (expectArtItems.isEmpty()) View.VISIBLE else View.INVISIBLE
+                expectArtItemViewPager.visibility = if (expectArtItems.isEmpty()) View.INVISIBLE else View.VISIBLE
+                expectArtItemShowAllBtn.visibility = if (expectArtItems.isEmpty()) View.INVISIBLE else View.VISIBLE
+            }
         }
     }
 

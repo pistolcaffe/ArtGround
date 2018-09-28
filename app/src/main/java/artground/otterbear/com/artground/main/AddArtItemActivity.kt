@@ -57,6 +57,9 @@ class AddArtItemActivity : AppCompatActivity() {
             mode = Modes.UPDATE
         }
 
+        setTitle(if (mode == Modes.ADD) R.string.registration_artitem_title else R.string.modify_artitem_title)
+        submitBtnText.setText(if (mode == Modes.ADD) R.string.registration else R.string.edit)
+
         categoryViewModel.getRawAllCategories().observe(this, Observer { r ->
             r?.let {
                 categoryItems.addAll(it)
@@ -202,6 +205,7 @@ class AddArtItemActivity : AppCompatActivity() {
         formEndDatePicker.setDateInfo(item.endDate)
         inputTime.setText(item.time)
         inputLocation.setText(item.place)
+        inputDesc.setText(item.etcDesc)
         inputUseFee.setText(item.useFee)
         inputWebPage.setText(item.orgLink)
         inputContact.setText(item.inquiry)
@@ -272,6 +276,7 @@ class AddArtItemActivity : AppCompatActivity() {
         val location = inputLocation.text.toString().apply {
             if (isBlank()) return SubmitResult(failedReason = FailedReason.FAILED_EMPTY_PLACE)
         }
+        val desc = inputDesc.text.toString().run { if (isBlank()) null else this }
         val useFee = inputUseFee.text.toString().run { if (isBlank()) null else this }
         val webPage = inputWebPage.text.toString().run { if (isBlank()) null else this }
         val contact = inputContact.text.toString().run { if (isBlank()) null else this }
@@ -283,6 +288,7 @@ class AddArtItemActivity : AppCompatActivity() {
                 endDate = endDate,
                 time = time,
                 place = location,
+                etcDesc = desc,
                 useFee = useFee,
                 orgLink = webPage,
                 inquiry = contact,

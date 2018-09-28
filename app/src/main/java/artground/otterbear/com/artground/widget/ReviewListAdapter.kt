@@ -19,7 +19,13 @@ import java.util.*
 
 class ReviewListAdapter(private val reviewDataSet: MutableList<DashboardReviewItem>) : RecyclerView.Adapter<ReviewListAdapter.ItemHolder>() {
     private val dateFormat = SimpleDateFormat("yyyy. MM. dd hh:mm", Locale.KOREA)
+    private var itemClickListener: ((Int, ReviewListAdapter.ItemHolder) -> Unit)? = null
+
     inner class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+
+    fun setOnItemClickListener(listener: ((Int, ReviewListAdapter.ItemHolder) -> Unit)) {
+        itemClickListener = listener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewListAdapter.ItemHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.review_list_row, parent, false)
@@ -41,13 +47,16 @@ class ReviewListAdapter(private val reviewDataSet: MutableList<DashboardReviewIt
             artItemTitle.text = reviewDataSet[position].title
             artItemCategory.apply {
                 val d = (background as LayerDrawable).findDrawableByLayerId(R.id.categoryBackground)
-                AppLogger.LOGE("d: $d")
                 (d as GradientDrawable).setColor(Color.parseColor("#${reviewDataSet[position].categoryThemeColor}"))
                 text = reviewDataSet[position].categoryName
             }
 
             reviewDesc.text = reviewDataSet[position].desc
             pubDate.text = dateFormat.format(reviewDataSet[position].date)
+
+            setOnClickListener {
+                itemClickListener?.invoke(position, holder)
+            }
         }
     }
 }

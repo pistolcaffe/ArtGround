@@ -88,12 +88,12 @@
                 app:layout_constraintTop_toBottomOf="@id/formImageSection">
 
                 <TextView
+                    android:id="@+id/submitBtnText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#941e34"
                     android:fontFamily="@font/namsan_medium"
                     android:gravity="center"
-                    android:text="작성완료"
                     android:textColor="@android:color/white"
                     android:textSize="14sp" />
 

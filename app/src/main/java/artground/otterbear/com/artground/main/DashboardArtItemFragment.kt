@@ -1,9 +1,11 @@
 package artground.otterbear.com.artground.main
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
 import android.os.Bundle
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -48,6 +50,13 @@ class DashboardArtItemFragment : Fragment() {
                     val categoryLayer = (background as LayerDrawable).findDrawableByLayerId(R.id.categoryBackground)
                     (categoryLayer as GradientDrawable).setColor(Color.parseColor("#${artItem.categoryThemeColor}"))
                     text = artItem.categoryName
+                }
+
+                artItemFrame.setOnClickListener { v ->
+                    val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, artItemImg, "sharedTransition")
+                    startActivity(Intent(v.context, DetailArtItemActivity::class.java).apply {
+                        putExtra(Values.EXTRA_ART_ITEM, it)
+                    }, options.toBundle())
                 }
             }
         }

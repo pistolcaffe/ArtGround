@@ -21,20 +21,23 @@ class ArtItemRepository(application: Application) {
 
     fun getAllArtItems() = artItemDao.getAllArtItems()
     fun getAllUserArtItems() = artItemDao.getAllUserArtItem()
+    fun getArtItemById(id: Long, listener: ((SimpleArtItem) -> Unit)) {
+        ArtItemTask.GetItemById(artItemDao, listener).execute(id)
+    }
 
     fun getDashboardActiveArtItems(filter: DashboardCategoryFilter): LiveData<MutableList<SimpleArtItem>> {
         val current = Date(System.currentTimeMillis())
         return when (filter) {
-            DashboardCategoryFilter.ALL -> artItemDao.getActiveArtItemsOnAllCategory(current)
-            DashboardCategoryFilter.FAVORITE -> artItemDao.getActiveArtItemsOnFavoriteCategory(current)
+            DashboardCategoryFilter.ALL -> artItemDao.getDashboardActiveItemsOnAllCategory(current)
+            DashboardCategoryFilter.FAVORITE -> artItemDao.getDashboardActiveItemsOnFavoriteCategory(current)
         }
     }
 
     fun getDashboardExpectArtItems(filter: DashboardCategoryFilter): LiveData<MutableList<SimpleArtItem>> {
         val current = Date(System.currentTimeMillis())
         return when (filter) {
-            DashboardCategoryFilter.ALL -> artItemDao.getExpectArtItemsOnAllCategory(current)
-            DashboardCategoryFilter.FAVORITE -> artItemDao.getExpectArtItemsOnFavoriteCategory(current)
+            DashboardCategoryFilter.ALL -> artItemDao.getDashboardExpectItemsOnAllCategory(current)
+            DashboardCategoryFilter.FAVORITE -> artItemDao.getDashboardExpectItemsOnFavoriteCategory(current)
         }
     }
 
@@ -42,6 +45,22 @@ class ArtItemRepository(application: Application) {
         return when (filter) {
             DashboardCategoryFilter.ALL -> artItemDao.getReviewItemsOnAllCategory()
             DashboardCategoryFilter.FAVORITE -> artItemDao.getReviewItemsOnFavoriteCategory()
+        }
+    }
+
+    fun getActiveArtItems(filter: DashboardCategoryFilter): LiveData<MutableList<SimpleArtItem>> {
+        val current = Date(System.currentTimeMillis())
+        return when (filter) {
+            DashboardCategoryFilter.ALL -> artItemDao.getActiveItemsOnAllCategory(current)
+            DashboardCategoryFilter.FAVORITE -> artItemDao.getActiveItemsOnFavoriteCategory(current)
+        }
+    }
+
+    fun getExpectArtItems(filter: DashboardCategoryFilter): LiveData<MutableList<SimpleArtItem>> {
+        val current = Date(System.currentTimeMillis())
+        return when (filter) {
+            DashboardCategoryFilter.ALL -> artItemDao.getExpectItemsOnAllCategory(current)
+            DashboardCategoryFilter.FAVORITE -> artItemDao.getExpectItemsOnFavoriteCategory(current)
         }
     }
 
@@ -98,6 +117,16 @@ sealed class ArtItemTask<Params, Result>(val artItemDao: ArtItemDao,
             return null
         }
     }
+
+    class GetItemById(dao: ArtItemDao, callback: ((SimpleArtItem) -> Unit)) : ArtItemTask<Long, SimpleArtItem>(dao, callback) {
+        override fun run(params: Array<out Long>): SimpleArtItem {
+            return artItemDao.getArtItemById(params[0])
+        }
+    }
+}
+
+enum class DashboardArtItemType {
+    ACTIVE, EXPECTED
 }
 
 enum class DashboardCategoryFilter {
