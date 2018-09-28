@@ -5,14 +5,9 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
 import android.arch.persistence.room.Update
-import artground.otterbear.com.artground.db.model.ArtItem
-import artground.otterbear.com.artground.db.model.SimpleArtItem
-import artground.otterbear.com.artground.db.model.UserArtItem
+import artground.otterbear.com.artground.db.model.*
 import java.util.*
 
-/**
- * TODO : 아직 필요한 Dao API 가 결정 되지 않음
- */
 @Dao
 interface ArtItemDao {
     @Query("select a._id, a.title, a.startDate, a.endDate, a.place, a.cultCode, a.orgLink, a.time, a.useFee, a.inquiry, a.etcDesc, a.mainImg, b.name, b.themeColor from ArtItem as a join CategoryItem as b on a.cid = b._id limit 40")
@@ -24,11 +19,11 @@ interface ArtItemDao {
     @Query("select * from ArtItem where (startDate between :from and :to) or (endDate >= :from)")
     fun findArtItemBetweenDates(from: Date, to: Date): MutableList<ArtItem>
 
-//    @Query("select a._id, a.title, a.cultCode, a.startDate, a.endDate, a.mainImg, a.place, b.name, b.themeColor from ArtItem as a join CategoryItem as b on a.cid = b._id where :current between startDate and endDate order by endDate asc limit :count")
-//    fun getActiveArtItems(current: Date, count: Int): LiveData<MutableList<SimpleArtItem>>
+    @Query("select a.*, j.title as title, j.mainImg as mainImg, j.name as name, j.themeColor as themeColor from ReviewItem as a join (select b._id, b.title, b.mainImg, c.name, c.themeColor from ArtItem as b join CategoryItem as c on b.cid = c._id) as j on a.aid = j._id")
+    fun getReviewItemsOnAllCategory(): LiveData<MutableList<DashboardReviewItem>>
 
-//    @Query("select ArtItem._id, ArtItem.title, ArtItem.cultCode, ArtItem.startDate, ArtItem.endDate, ArtItem.mainImg, ArtItem.place, CategoryItem.name, CategoryItem.themeColor from ArtItem inner join CategoryItem on ArtItem.cid = CategoryItem._id where startDate > :current order by startDate asc limit :count")
-//    fun getExpectArtItems(current: Date, count: Int): LiveData<MutableList<SimpleArtItem>>
+    @Query("select a.*, j.title as title, j.mainImg as mainImg, j.name as name, j.themeColor as themeColor from ReviewItem as a join (select b._id, b.title, b.mainImg, c.name, c.themeColor from ArtItem as b join (select _id as _cid, name, themeColor from CategoryItem where favorite = 1) as c on b.cid = _cid) as j on a.aid = j._id")
+    fun getReviewItemsOnFavoriteCategory(): LiveData<MutableList<DashboardReviewItem>>
 
     @Query("select a._id, a.title, a.cultCode, a.startDate, a.endDate, a.mainImg, a.place, b.name, b.themeColor from ArtItem as a join CategoryItem as b on a.cid = b._id where :current between startDate and endDate order by endDate asc limit 15")
     fun getActiveArtItemsOnAllCategory(current: Date): LiveData<MutableList<SimpleArtItem>>
@@ -41,6 +36,12 @@ interface ArtItemDao {
 
     @Query("select _id, title, startDate, endDate, place, cultCode, mainImg, name, themeColor from (select _id, cid, title, startDate, endDate, place, cultCode, mainImg from ArtItem as a where _id in (select b._id from ArtItem as b where a.cid = b.cid and startDate > :current limit 5)) as art join (select _id as _cid, name, themeColor from CategoryItem where favorite = 1) as category on art.cid = category._cid order by startDate asc")
     fun getExpectArtItemsOnFavoriteCategory(current: Date): LiveData<MutableList<SimpleArtItem>>
+
+    @Query("select _id, `desc`, date from ReviewItem where aid = :aid order by date desc")
+    fun getReviewItemsByArtItemId(aid: Long): LiveData<MutableList<SimpleReviewItem>>
+
+    @Insert
+    fun insertReviewItem(item: ReviewItem): Long
 
     @Insert
     fun insert(item: ArtItem): Long

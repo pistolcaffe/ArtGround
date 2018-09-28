@@ -3,8 +3,7 @@ package artground.otterbear.com.artground.db.viewmodel
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
-import artground.otterbear.com.artground.db.model.ArtItem
-import artground.otterbear.com.artground.db.model.SimpleArtItem
+import artground.otterbear.com.artground.db.model.*
 import artground.otterbear.com.artground.db.repository.ArtItemRepository
 import artground.otterbear.com.artground.db.repository.DashboardCategoryFilter
 import java.util.*
@@ -27,8 +26,20 @@ class ArtItemViewModel(application: Application) : AndroidViewModel(application)
         return dashboardExpectArtItems
     }
 
+    fun getDashboardReviewItems(filter: DashboardCategoryFilter): LiveData<MutableList<DashboardReviewItem>> {
+        return repository.getDashboardReviewItems(filter)
+    }
+
+    fun getReviewItemsByArtItemId(aid: Long): LiveData<MutableList<SimpleReviewItem>> {
+        return repository.getReviewItemsByArtItemId(aid)
+    }
+
     fun findArtItem(cid: Long, start: Date, end: Date): LiveData<MutableList<SimpleArtItem>> {
         return repository.findArtItem(cid, start, end)
+    }
+
+    fun insertReviewItem(reviewItem: ReviewItem) {
+        repository.insertReviewItem(reviewItem)
     }
 
     fun insertArtItem(artItem: ArtItem, listener: ((Long) -> Unit)? = null) {

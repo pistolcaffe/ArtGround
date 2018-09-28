@@ -9,26 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import artground.otterbear.com.artground.R
 import artground.otterbear.com.artground.common.AppLogger
-import com.bumptech.glide.Glide
+import artground.otterbear.com.artground.common.Values
+import artground.otterbear.com.artground.db.model.DashboardReviewItem
+import artground.otterbear.com.artground.main.GlideApp
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import kotlinx.android.synthetic.main.review_list_row.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
-class ReviewListAdapter : RecyclerView.Adapter<ReviewListAdapter.ItemHolder>() {
-    //TODO: TEST
-    val resIds = arrayOf(R.drawable.category_bg_busking,
-            R.drawable.category_bg_classic,
-            R.drawable.category_bg_concert,
-            R.drawable.category_bg_culture_lecture,
-            R.drawable.category_bg_dance,
-            R.drawable.category_bg_etc,
-            R.drawable.category_bg_exhibition,
-            R.drawable.category_bg_festival,
-            R.drawable.category_bg_gukak,
-            R.drawable.category_bg_movie,
-            R.drawable.category_bg_musical_opera,
-            R.drawable.category_bg_solo,
-            R.drawable.category_bg_theater)
-
-
+class ReviewListAdapter(private val reviewDataSet: MutableList<DashboardReviewItem>) : RecyclerView.Adapter<ReviewListAdapter.ItemHolder>() {
+    private val dateFormat = SimpleDateFormat("yyyy. MM. dd hh:mm", Locale.KOREA)
     inner class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewListAdapter.ItemHolder {
@@ -36,26 +26,28 @@ class ReviewListAdapter : RecyclerView.Adapter<ReviewListAdapter.ItemHolder>() {
         return ItemHolder(itemView)
     }
 
-    override fun getItemCount() = 10
+    override fun getItemCount() = reviewDataSet.size
 
     override fun onBindViewHolder(holder: ReviewListAdapter.ItemHolder, position: Int) {
         holder.itemView.apply {
-            val pos = java.util.Random().nextInt(resIds.size)
-            Glide.with(context).load(resIds[pos]).into(reviewImg)
+            var imageInfo = reviewDataSet[position].mainImg
+            imageInfo?.let { info ->
+                if (info.contains(Values.API_ART_ITEM_IMAGE_URL_PREFIX)) {
+                    imageInfo = StringBuilder(Values.API_ART_ITEM_IMAGE_URL_PREFIX.toLowerCase()).append(info.substring(Values.API_ART_ITEM_IMAGE_URL_PREFIX.length, info.length)).toString()
+                }
+            }
 
+            GlideApp.with(context).load(imageInfo).transition(DrawableTransitionOptions.withCrossFade()).into(reviewImg)
+            artItemTitle.text = reviewDataSet[position].title
             artItemCategory.apply {
                 val d = (background as LayerDrawable).findDrawableByLayerId(R.id.categoryBackground)
                 AppLogger.LOGE("d: $d")
-                (d as GradientDrawable).setColor(Color.parseColor("#f57f17"))
-                text = "문화강좌/교양"
+                (d as GradientDrawable).setColor(Color.parseColor("#${reviewDataSet[position].categoryThemeColor}"))
+                text = reviewDataSet[position].categoryName
             }
 
-            reviewDesc.text = if (position % 2 == 0) "정말 재미있어요."
-            else {
-                "정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요." +
-                        "정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요." +
-                        "정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요.정말 재미있어요."
-            }
+            reviewDesc.text = reviewDataSet[position].desc
+            pubDate.text = dateFormat.format(reviewDataSet[position].date)
         }
     }
 }
