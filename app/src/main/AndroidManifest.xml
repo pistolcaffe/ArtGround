@@ -28,7 +28,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".main.PreperationActivity"
-            android:theme="@style/PreperationTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".main.FavoriteCategory"
             android:theme="@style/PreperationTheme" />
