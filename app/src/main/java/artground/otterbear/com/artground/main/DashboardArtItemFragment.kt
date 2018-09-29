@@ -35,7 +35,7 @@ class DashboardArtItemFragment : Fragment() {
                     }
                 }
 
-                GlideApp.with(activity).load(imageInfo).transition(withCrossFade()).into(artItemImg)
+                GlideApp.with(activity).load(imageInfo).placeholder(R.drawable.my_logo).transition(withCrossFade()).into(artItemImg)
                 artItemTitle.text = artItem.title.replace("&#39;", "\'")
 
                 val sdf = SimpleDateFormat("yyyy. MM. dd", Locale.KOREA)

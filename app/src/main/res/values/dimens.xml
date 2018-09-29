@@ -75,6 +75,9 @@
     <dimen name="form_desc_height">120dp</dimen>
     <dimen name="empty_expect_art_item_section_height">210dp</dimen>
     <dimen name="walkthrough_title_textsize">24sp</dimen>
+    <dimen name="detail_art_item_image_height">300dp</dimen>
+    <dimen name="dashboard_loadingview_top_margin">220dp</dimen>
+    <dimen name="spinner_underline_height">0.5dp</dimen>
 
     <!-- favorite Category-->
     <dimen name="favorite_category_top_margin">15dp</dimen>

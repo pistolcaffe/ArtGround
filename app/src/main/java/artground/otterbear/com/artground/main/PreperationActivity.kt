@@ -33,10 +33,12 @@ class PreperationActivity : AppCompatActivity() {
         }
 
         startBtn.setOnClickListener {
-            startActivity(Intent(it.context, FavoriteCategory::class.java))
+            startActivity(Intent(it.context, FavoriteCategory::class.java).apply {
+                putExtra(Values.EXTRA_FAVORITE_CATEGORY_OP_MODE, Mode.NEW)
+            })
             finish()
         }
-        autoPagingHandler.postDelayed(autoPagingRunnable, 5000)
+        autoPagingHandler.postDelayed(autoPagingRunnable, AUTO_PAGING_DELAY)
     }
 
     override fun onDestroy() {
@@ -59,11 +61,13 @@ class PreperationActivity : AppCompatActivity() {
         override fun onPageSelected(position: Int) {
             loadWalkthroughBg(position)
             autoPagingHandler.removeCallbacks(autoPagingRunnable)
-            autoPagingHandler.postDelayed(autoPagingRunnable, 5000)
+            autoPagingHandler.postDelayed(autoPagingRunnable, AUTO_PAGING_DELAY)
         }
     }
 
     companion object {
+        private const val AUTO_PAGING_DELAY: Long = 3500
+
         class WalkthroughPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
             override fun getCount(): Int = 3
             override fun getItem(position: Int): Fragment {

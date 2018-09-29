@@ -16,7 +16,6 @@ import artground.otterbear.com.artground.R
 import artground.otterbear.com.artground.common.AppLogger
 import artground.otterbear.com.artground.common.Values
 import artground.otterbear.com.artground.db.model.CategoryItem
-import artground.otterbear.com.artground.db.viewmodel.ArtItemViewModel
 import artground.otterbear.com.artground.db.viewmodel.CategoryViewModel
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.simple_category_list_item.view.*
@@ -26,8 +25,8 @@ import java.util.*
 class SearchFragment : Fragment() {
 
     private val categoryViewModel by lazy { ViewModelProviders.of(this).get(CategoryViewModel::class.java) }
-    private val artItemViewModel by lazy { ViewModelProviders.of(this).get(ArtItemViewModel::class.java) }
     private val categoryItems = mutableListOf<CategoryItem>()
+    private val favoriteCategoryItems = mutableListOf<CategoryItem>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_search, container, false)
@@ -52,15 +51,21 @@ class SearchFragment : Fragment() {
             }
         })
 
-        //TODO: 관심 카테고리 연동 작업
         favoriteCategoryList.apply {
             setHasFixedSize(true)
             layoutManager = GridLayoutManager(context.applicationContext, 3)
-            this.adapter = SimpleCategoryListAdapter()
-            setOnClickListener {
-                AppLogger.stamp()
-            }
+            this.adapter = SimpleCategoryListAdapter(favoriteCategoryItems)
         }
+
+        categoryViewModel.getFavoriteCategories().observe(this, Observer { r ->
+            r?.let {
+                favoriteCategoryItems.apply {
+                    if (size > 0) clear()
+                    addAll(it)
+                }
+                favoriteCategoryList.adapter.notifyDataSetChanged()
+            }
+        })
 
         startDateBtn.setDateInfoListener {
             AppLogger.LOGE("startDate: $it")
@@ -90,6 +95,12 @@ class SearchFragment : Fragment() {
         searchBtn.setOnClickListener {
             postSearch()
         }
+
+        favoriteCategorySettingBtn.setOnClickListener {
+            startActivity(Intent(it.context, FavoriteCategory::class.java).apply {
+                putExtra(Values.EXTRA_FAVORITE_CATEGORY_OP_MODE, Mode.MODIFY)
+            })
+        }
     }
 
     private fun postSearch() {
@@ -108,36 +119,19 @@ class SearchFragment : Fragment() {
     }
 
     companion object {
-        class SimpleCategoryListAdapter : RecyclerView.Adapter<SimpleCategoryListAdapter.ItemViewHolder>() {
-            inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-                init {
-                    itemView.setOnClickListener {
-                        AppLogger.stamp()
-                    }
-                }
-            }
+        class SimpleCategoryListAdapter(private val dataSet: MutableList<CategoryItem>) : RecyclerView.Adapter<SimpleCategoryListAdapter.ItemViewHolder>() {
+            inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-            override fun getItemCount() = 3
+            override fun getItemCount() = dataSet.size
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
                 return ItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.simple_category_list_item, parent, false))
             }
 
             override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
                 holder.itemView.apply {
-                    when (position) {
-                        0 -> {
-                            GlideApp.with(context).load(R.drawable.category_bg_concert).into(categoryImg)
-                            categoryName.text = "콘서트"
-                        }
-                        1 -> {
-                            GlideApp.with(context).load(R.drawable.category_bg_musical_opera).into(categoryImg)
-                            categoryName.text = "뮤지컬/오페라"
-                        }
-                        else -> {
-                            GlideApp.with(context).load(R.drawable.category_bg_busking).into(categoryImg)
-                            categoryName.text = "길거리 공연"
-                        }
-                    }
+                    val resId = context.resources.getIdentifier(dataSet[position].imgResName, "drawable", context.packageName)
+                    GlideApp.with(context).load(resId).into(categoryImg)
+                    categoryName.text = dataSet[position].name
                 }
             }
         }

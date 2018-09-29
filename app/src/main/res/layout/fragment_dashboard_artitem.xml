@@ -121,7 +121,7 @@
             android:id="@+id/artItemLocationSection"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingRight="5dp"
+            android:paddingRight="@dimen/bottom_navigation_dot_size"
             app:layout_constraintBottom_toBottomOf="@id/bGl"
             app:layout_constraintLeft_toLeftOf="@id/lGl"
             app:layout_constraintRight_toLeftOf="@+id/artItemCategory">

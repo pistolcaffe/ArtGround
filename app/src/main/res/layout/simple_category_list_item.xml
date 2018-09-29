@@ -33,7 +33,7 @@
             android:fontFamily="@font/namsan_light"
             android:gravity="center"
             android:textColor="@android:color/white"
-            android:textSize="12sp"
+            android:textSize="@dimen/dashboard_review_info_title_textsize"
             app:layout_constraintBottom_toBottomOf="@id/categoryImg"
             app:layout_constraintLeft_toLeftOf="@id/categoryImg"
             app:layout_constraintRight_toRightOf="@id/categoryImg"

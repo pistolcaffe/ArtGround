@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import artground.otterbear.com.artground.R
-import artground.otterbear.com.artground.common.AppLogger
 import artground.otterbear.com.artground.common.Values
 import artground.otterbear.com.artground.db.model.DashboardReviewItem
 import artground.otterbear.com.artground.main.GlideApp
@@ -43,7 +42,7 @@ class ReviewListAdapter(private val reviewDataSet: MutableList<DashboardReviewIt
                 }
             }
 
-            GlideApp.with(context).load(imageInfo).transition(DrawableTransitionOptions.withCrossFade()).into(reviewImg)
+            GlideApp.with(context).load(imageInfo).placeholder(R.drawable.my_logo).transition(DrawableTransitionOptions.withCrossFade()).into(reviewImg)
             artItemTitle.text = reviewDataSet[position].title
             artItemCategory.apply {
                 val d = (background as LayerDrawable).findDrawableByLayerId(R.id.categoryBackground)

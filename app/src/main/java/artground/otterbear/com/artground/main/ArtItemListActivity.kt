@@ -21,11 +21,6 @@ import kotlinx.android.synthetic.main.activity_art_item_list.*
 import kotlinx.android.synthetic.main.art_item_row.view.*
 import java.io.Serializable
 
-//TODO: Glide placeholder 넣기
-//TODO: 각 화면에 적절한 타이틀 및 portrait 설정
-//TODO: dimens 정리
-//TODO: Font 정리
-//TODO: drawable 폴더 정리
 //TODO: ArtItem 새로운 걸로 바꿔서 올릴지 검토
 
 class ArtItemListActivity : AppCompatActivity() {

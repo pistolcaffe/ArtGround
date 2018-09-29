@@ -23,9 +23,6 @@ sealed class SimpleMessageDialog : AppDialogFragment() {
         return ButtonsSpec(positive = android.R.string.ok, negative = android.R.string.cancel)
     }
 
-    /**
-     * TODO : Test 코드
-     */
     class PermissionInfo : SimpleMessageDialog() {
         override val titleResId: Int = R.string.permission_usage_info_title
         override val messageResId: Int = R.string.test_dialog_msg
