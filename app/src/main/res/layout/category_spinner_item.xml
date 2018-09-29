@@ -6,5 +6,5 @@
     android:gravity="center"
     android:fontFamily="@font/namsan_medium"
     android:textColor="#616161"
-    android:textSize="12sp" />
+    android:textSize="@dimen/dashboard_review_info_title_textsize" />
 

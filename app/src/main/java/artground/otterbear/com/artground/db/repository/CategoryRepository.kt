@@ -23,18 +23,21 @@ class CategoryRepository(application: Application) {
     fun getAllCategories() = allCategories
     fun getRawAllCategories() = categoryItemDao.getRawAllCategories()
     fun getFavoriteCategories() = favoriteCategories
-    fun updateCategories(categories: MutableList<CategoryItem>, callback: ((Void) -> Unit)?) {
-        CategoryTask.UpdateAll(categoryItemDao, callback).execute()
+    fun updateCategories(categories: MutableList<StatCategoryItem>, callback: ((Int) -> Unit)?) {
+        val entities = mutableListOf<CategoryItem>()
+        for (c in categories) {
+            entities.add(c.toEntity())
+        }
+        CategoryTask.UpdateAll(categoryItemDao, callback).execute(entities)
     }
 }
 
 sealed class CategoryTask<Params, Result>(val dao: CategoryItemDao,
                                           override val callback: ((Result) -> Unit)?) : Task<Params, Result>() {
 
-    class UpdateAll(dao: CategoryItemDao, callback: ((Void) -> Unit)?) : CategoryTask<MutableList<CategoryItem>, Void>(dao, callback) {
-        override fun run(params: Array<out MutableList<CategoryItem>>): Void? {
-            dao.updateCategories(params[0])
-            return null
+    class UpdateAll(dao: CategoryItemDao, callback: ((Int) -> Unit)?) : CategoryTask<MutableList<CategoryItem>, Int>(dao, callback) {
+        override fun run(params: Array<out MutableList<CategoryItem>>): Int {
+            return dao.updateCategories(params[0])
         }
     }
 }

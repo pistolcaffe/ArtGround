@@ -8,5 +8,6 @@ class Values {
         const val DUMMY_REVIEW_ITEM_ID: Long = -1
         const val EXTRA_ART_ITEM_LIST_OP_TYPE = "extra_art_item_list_op_type"
         const val WALKTHROUGH_IDX = "walkthrough_idx"
+        const val EXTRA_FAVORITE_CATEGORY_OP_MODE = "extra_favorite_category_op_mode"
     }
 }

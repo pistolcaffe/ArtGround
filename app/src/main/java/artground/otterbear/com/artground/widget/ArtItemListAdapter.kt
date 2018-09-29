@@ -47,7 +47,7 @@ class ArtItemListAdapter(private val dataSet: MutableList<SimpleArtItem>,
                 }
             }
 
-            GlideApp.with(context).load(imageInfo).transition(DrawableTransitionOptions.withCrossFade()).into(artImg)
+            GlideApp.with(context).load(imageInfo).placeholder(R.drawable.my_logo).transition(DrawableTransitionOptions.withCrossFade()).into(artImg)
             artItemName.text = dataSet[position].title.replace("&#39;", "\'")
 
             artItemDate.text = StringBuilder().apply {

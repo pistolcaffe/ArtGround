@@ -29,6 +29,7 @@ abstract class AppDialogFragment : DialogFragment(), View.OnClickListener {
      * 이때 return 값이 true 이면 Dialog 이벤트가 처리 된것으로 간주하고 dismiss 시킴
      */
     open fun performPositiveButtonClick() = true
+
     open fun performNeutralButtonClick() = true
     open fun performNegativeButtonClick() = true
 

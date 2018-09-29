@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!-- TODO: only portrait -->
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="artground.otterbear.com.artground">
 
@@ -10,7 +10,6 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
@@ -25,22 +24,29 @@
         </activity>
         <activity
             android:name=".main.MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".main.PreperationActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".main.FavoriteCategory"
-            android:theme="@style/PreperationTheme" />
-        <activity android:name=".main.ArtItemListActivity" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".main.ArtItemListActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".main.DetailArtItemActivity"
             android:label=""
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".main.AddArtItemActivity"
             android:label=""
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateHidden" />
     </application>

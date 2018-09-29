@@ -21,20 +21,20 @@
     <TextView
         android:id="@+id/modify"
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="@dimen/bottom_navigation_view_height"
         android:background="?attr/selectableItemBackground"
         android:fontFamily="@font/namsan_medium"
         android:gravity="center_vertical"
         android:text="변경하기"
         android:textColor="#757575"
-        android:textSize="14sp"
+        android:textSize="@dimen/dashboard_section_title_textsize"
         app:layout_constraintLeft_toLeftOf="@id/lGl"
         app:layout_constraintRight_toRightOf="@id/rGl" />
 
     <View
         android:id="@+id/line"
         android:layout_width="0dp"
-        android:layout_height="0.8dp"
+        android:layout_height="@dimen/write_review_section_top_line_height"
         android:background="#e0e0e0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -43,13 +43,13 @@
     <TextView
         android:id="@+id/delete"
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="@dimen/bottom_navigation_view_height"
         android:background="?attr/selectableItemBackground"
         android:fontFamily="@font/namsan_medium"
         android:gravity="center_vertical"
         android:text="삭제하기"
         android:textColor="#757575"
-        android:textSize="14sp"
+        android:textSize="@dimen/dashboard_section_title_textsize"
         app:layout_constraintLeft_toLeftOf="@id/lGl"
         app:layout_constraintRight_toRightOf="@id/rGl"
         app:layout_constraintTop_toBottomOf="@id/line" />

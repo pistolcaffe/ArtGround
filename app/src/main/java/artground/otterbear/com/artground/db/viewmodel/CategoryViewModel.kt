@@ -23,7 +23,7 @@ class CategoryViewModel(application: Application) : AndroidViewModel(application
     fun getAllCategories() = allCategories
     fun getRawAllCategories() = repository.getRawAllCategories()
     fun getFavoriteCategories() = favoriteCategories
-    fun updateCategories(categories: MutableList<CategoryItem>, listener: ((Void) -> Unit)? = null) {
+    fun updateCategories(categories: MutableList<StatCategoryItem>, listener: ((Int) -> Unit)? = null) {
         repository.updateCategories(categories, listener)
     }
 }

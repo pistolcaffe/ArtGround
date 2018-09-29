@@ -49,7 +49,7 @@ class DetailArtItemActivity : AppCompatActivity() {
                     imageInfo = StringBuilder(Values.API_ART_ITEM_IMAGE_URL_PREFIX.toLowerCase()).append(info.substring(Values.API_ART_ITEM_IMAGE_URL_PREFIX.length, info.length)).toString()
                 }
             }
-            GlideApp.with(this@DetailArtItemActivity).load(imageInfo).into(artItemImg)
+            GlideApp.with(this@DetailArtItemActivity).load(imageInfo).placeholder(R.drawable.my_logo).into(artItemImg)
 
             artItemCategory.apply {
                 val categoryLayer = (background as LayerDrawable).findDrawableByLayerId(R.id.categoryBackground)

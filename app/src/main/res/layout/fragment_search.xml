@@ -139,7 +139,7 @@
                 <View
                     android:id="@+id/categorySpinnerUnderline"
                     android:layout_width="0dp"
-                    android:layout_height="0.5dp"
+                    android:layout_height="@dimen/spinner_underline_height"
                     android:background="#e0e0e0"
                     app:layout_constraintBottom_toBottomOf="@id/categorySpinnerIcon"
                     app:layout_constraintLeft_toLeftOf="@id/categorySpinnerIcon"
@@ -173,7 +173,7 @@
                 <View
                     android:id="@+id/startDateUnderLine"
                     android:layout_width="0dp"
-                    android:layout_height="0.5dp"
+                    android:layout_height="@dimen/spinner_underline_height"
                     android:background="#e0e0e0"
                     app:layout_constraintBottom_toBottomOf="@id/startDateIcon"
                     app:layout_constraintLeft_toLeftOf="@id/startDateIcon"
@@ -187,7 +187,7 @@
                     android:gravity="center"
                     android:text="~"
                     android:textColor="#616161"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/dashboard_review_info_title_textsize"
                     app:layout_constraintBottom_toBottomOf="@id/startDateIcon"
                     app:layout_constraintLeft_toRightOf="@id/dateLeftGl"
                     app:layout_constraintRight_toRightOf="@id/dateRightGl"
@@ -222,7 +222,7 @@
                 <View
                     android:id="@+id/endDateUnderLine"
                     android:layout_width="0dp"
-                    android:layout_height="0.5dp"
+                    android:layout_height="@dimen/spinner_underline_height"
                     android:background="#e0e0e0"
                     app:layout_constraintBottom_toBottomOf="@id/endDateIcon"
                     app:layout_constraintLeft_toLeftOf="@id/endDateIcon"
@@ -274,16 +274,24 @@
             app:layout_constraintLeft_toLeftOf="@id/contentLeftGl"
             app:layout_constraintTop_toBottomOf="@id/searchFormSection" />
 
-        <ImageView
+        <FrameLayout
             android:id="@+id/favoriteCategorySettingBtn"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:scaleType="center"
-            android:src="@drawable/ic_settings_18dp"
             app:layout_constraintBottom_toBottomOf="@id/favoriteCategoryTitle"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintRight_toRightOf="@id/contentRightGl"
-            app:layout_constraintTop_toTopOf="@id/favoriteCategoryTitle" />
+            app:layout_constraintTop_toBottomOf="@id/searchFormSection">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:scaleType="center"
+                android:src="@drawable/ic_settings_18dp" />
+
+        </FrameLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/favoriteCategoryList"

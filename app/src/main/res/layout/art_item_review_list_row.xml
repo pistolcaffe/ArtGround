@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="10dp"
-    android:paddingTop="10dp">
+    android:paddingBottom="@dimen/dashboard_review_info_left_margin"
+    android:paddingTop="@dimen/dashboard_review_info_left_margin">
 
     <android.support.constraint.Guideline
         android:id="@+id/lGl"
@@ -27,7 +27,7 @@
         android:fontFamily="@font/namsan_medium"
         android:text="후기내용후기내용후기내용후기내용후기내용후기내용후기내용후기내용후기내용후기내용후기내용후기내용후기내용후기내용후기내용후기내용후기내용후기내용후기내용"
         android:textColor="#757575"
-        android:textSize="12dp"
+        android:textSize="@dimen/dashboard_review_info_title_textsize"
         app:layout_constraintLeft_toLeftOf="@id/lGl"
         app:layout_constraintRight_toRightOf="@id/rGl"
         app:layout_constraintTop_toTopOf="parent" />

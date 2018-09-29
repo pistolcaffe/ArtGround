@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/dashboard_item_card_corner_radius"
     app:cardUseCompatPadding="true">
 
     <android.support.constraint.ConstraintLayout
@@ -16,17 +15,16 @@
             android:layout_height="wrap_content"
             app:layout_constraintGuide_percent=".30" />
 
-
         <ImageView
             android:id="@+id/fc_item_img"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
-            app:layout_constraintDimensionRatio="H, 1:1"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="H, 1:1"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.constraint.Guideline
             android:id="@+id/fc_item_favorite_gl"
@@ -59,33 +57,52 @@
             app:layout_constraintGuide_percent=".05" />
 
         <ImageView
-            android:visibility="visible"
             android:id="@+id/fc_item_unchecked"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/check1"
+            android:visibility="gone"
             app:layout_constraintRight_toLeftOf="@id/fc_check_vgl"
             app:layout_constraintTop_toTopOf="@id/fc_check_hgl" />
 
         <ImageView
-            android:visibility="gone"
             android:id="@+id/fc_item_checked"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/check2"
+            android:visibility="gone"
             app:layout_constraintRight_toLeftOf="@id/fc_check_vgl"
-            app:layout_constraintTop_toTopOf="@id/fc_check_hgl"/>
+            app:layout_constraintTop_toTopOf="@id/fc_check_hgl" />
 
         <TextView
             android:id="@+id/fc_item_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/namsan_medium"
+            android:gravity="center_horizontal"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/category_tab_item_textsize"
+            android:textSize="@dimen/dashboard_section_title_textsize"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"  />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/selectedMask"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#b3000000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_check_green_24dp" />
+
+        </FrameLayout>
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

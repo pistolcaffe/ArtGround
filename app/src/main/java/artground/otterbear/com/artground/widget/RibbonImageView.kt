@@ -34,7 +34,7 @@ class RibbonImageView(context: Context, attrs: AttributeSet) : AppCompatImageVie
         path.lineTo(150f, 0f)
         path.lineTo(0f, 150f)
         path.lineTo(0f, 100f)
-        canvas?.let{
+        canvas?.let {
             it.drawPath(path, paint)
         }
     }

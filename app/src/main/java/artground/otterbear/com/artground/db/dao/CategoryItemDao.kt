@@ -28,5 +28,5 @@ interface CategoryItemDao {
      * 카테고리 업데이트 (선호카테고리 변경 시 사용)
      */
     @Update
-    fun updateCategories(items: MutableList<CategoryItem>)
+    fun updateCategories(items: MutableList<CategoryItem>): Int
 }
