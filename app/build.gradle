@@ -42,6 +42,7 @@ dependencies {
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.robertlevonyan.view:MaterialChipView:1.2.4'
     implementation 'com.github.ybq:Android-SpinKit:1.1.0'
+    implementation 'com.romandanylyk:pageindicatorview:1.0.2'
     kapt "android.arch.persistence.room:compiler:$lifecycle_version"
     kapt "com.github.bumptech.glide:compiler:$glide_version"
     testImplementation 'junit:junit:4.12'

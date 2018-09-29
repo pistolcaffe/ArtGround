@@ -68,6 +68,18 @@
     <string name="empty_expect_art_item">진행예정 문화/예술 정보가 없습니다 </string>
     <string name="art_item_search_result_title">문화/예술 정보 검색결과</string>
 
+    <string-array name="walkthrough_titles">
+        <item>둘러보기</item>
+        <item>찾아보기</item>
+        <item>홍보하기</item>
+    </string-array>
+
+    <string-array name="walkthrough_descs">
+        <item>다양한 문화/예술 정보를 만나보세요</item>
+        <item>원하는 문화/예술 정보를 손쉽게 찾도록 도와드려요</item>
+        <item>공연, 전시회, 문화강좌 등을 진행할 계획이신가요?\n나의 문화/예술 정보를 등록하고 홍보해보세요</item>
+    </string-array>
+
     <!-- dummy review -->
     <string-array name="dummy_review">
         <item>아쉬움이 커요</item>
